@@ -1,0 +1,14 @@
+server.port: 8082
+
+spring.social.twitterTemplate:
+  app-id: reMZX6SEgJsMyugWzEKezvKXe
+  appSecret: Zyhq7BdsTp2xLtOymm7zJVXrKp38GDRXvW5avFQ90KqoZDNR7q
+
+twitterTemplate.access:
+  token: 215640018-09GO61YYuCbPgwi2Kt89o2us9M7mMSfYAlIgl4Eg
+  secret: xIgMRyV3qO1xce2OYTlA2mIMXRlYFq5Rlpro2veazimhU
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8080/eureka

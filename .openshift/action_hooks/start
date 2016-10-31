@@ -1,5 +1,15 @@
 #!/bin/bash
-# The logic to start up your application should be put in this
-# script. The application will work only if it binds to
-# $OPENSHIFT_DIY_IP:8080
-nohup $OPENSHIFT_REPO_DIR/diy/testrubyserver.rb $OPENSHIFT_DIY_IP $OPENSHIFT_REPO_DIR/diy |& /usr/bin/logshifter -tag diy &
+cd $OPENSHIFT_REPO_DIR
+
+export JAVA_HOME=/etc/alternatives/java_sdk_1.8.0
+export PATH=$JAVA_HOME/bin:$PATH
+
+nohup java -jar target/app-twitterTemplate-1.0-SNAPSHOT.jar \
+--spring.data.mongodb.host=${OPENSHIFT_MONGODB_DB_HOST} \
+--spring.data.mongodb.port=${OPENSHIFT_MONGODB_DB_PORT} \
+--spring.data.mongodb.database=${OPENSHIFT_APP_NAME} \
+--spring.data.mongodb.username=${OPENSHIFT_MONGODB_DB_USERNAME} \
+--spring.data.mongodb.password=${OPENSHIFT_MONGODB_DB_PASSWORD} \
+--server.port=${OPENSHIFT_DIY_PORT} \
+--server.address=${OPENSHIFT_DIY_IP} \
+>> ${OPENSHIFT_DIY_LOG_DIR}/ehfg-twitterTemplate.log &
