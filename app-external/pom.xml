@@ -1,0 +1,32 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.ehfg</groupId>
+		<artifactId>app-parent</artifactId>
+		<version>1.0-SNAPSHOT</version>
+	</parent>
+	<artifactId>app-external</artifactId>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.ehfg</groupId>
+			<artifactId>app-api</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.ehfg</groupId>
+			<artifactId>app-core</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.social</groupId>
+			<artifactId>spring-social-twitter</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jsoup</groupId>
+			<artifactId>jsoup</artifactId>
+		</dependency>
+    </dependencies>
+</project>
