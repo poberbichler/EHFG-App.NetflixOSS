@@ -20,20 +20,20 @@ import java.util.Collection;
 @RestController
 @RequestMapping("tweets")
 public class TweetController {
-	private final TwitterService twitterService;
+    private final TwitterService twitterService;
 
-	@Autowired
-	public TweetController(TwitterService twitterService) {
-		this.twitterService = twitterService;
-	}
+    @Autowired
+    public TweetController(TwitterService twitterService) {
+        this.twitterService = twitterService;
+    }
 
-	@GetMapping("{hashtag}/{timestamp}")
-	public Collection<? extends TweetRepresentation> findNewer(@PathVariable("hashtag") Hashtag hashtag, @PathVariable("timestamp") LocalDateTime lastTweet) {
-		return twitterService.findNewerTweets(hashtag, lastTweet);
-	}
+    @GetMapping("{hashtag}/{timestamp}")
+    public Collection<? extends TweetRepresentation> findNewer(@PathVariable("hashtag") Hashtag hashtag, @PathVariable("timestamp") LocalDateTime lastTweet) {
+        return twitterService.findNewerTweets(hashtag, lastTweet);
+    }
 
-	@GetMapping("{hashtag}/page/{pageCounter}/{size}")
-	public Page<? extends TweetRepresentation> getPage(@PathVariable("hashtag") Hashtag hashtag, @PathVariable("pageCounter") int pageCounter, @PathVariable("size") int size) {
-		return twitterService.findPage(hashtag, pageCounter, size);
-	}
+    @GetMapping("{hashtag}/page/{pageCounter}/{size}")
+    public Page<? extends TweetRepresentation> getPage(@PathVariable("hashtag") Hashtag hashtag, @PathVariable("pageCounter") int pageCounter, @PathVariable("size") int size) {
+        return twitterService.findPage(hashtag, pageCounter, size);
+    }
 }

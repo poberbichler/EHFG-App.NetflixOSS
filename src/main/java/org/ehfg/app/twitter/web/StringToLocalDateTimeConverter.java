@@ -12,14 +12,14 @@ import java.time.ZoneId;
  * @since 10.2016
  */
 @Component
-public class StringToLocalDateTimeConverter implements Converter<String, LocalDateTime>{
-	@Override
-	public LocalDateTime convert(String source) {
-		if (source == null) {
-			return LocalDateTime.now();
-		}
+public class StringToLocalDateTimeConverter implements Converter<String, LocalDateTime> {
+    @Override
+    public LocalDateTime convert(String source) {
+        if (source == null) {
+            return LocalDateTime.now();
+        }
 
-		final LocalDateTime utcTime = LocalDateTime.ofInstant(Instant.ofEpochMilli(Long.valueOf(source)), ZoneId.of("UTC"));
-		return utcTime.atZone(ZoneId.of("UTC")).withZoneSameInstant(ZoneId.systemDefault()).toLocalDateTime().minusHours(2);
-	}
+        final LocalDateTime utcTime = LocalDateTime.ofInstant(Instant.ofEpochMilli(Long.valueOf(source)), ZoneId.of("UTC"));
+        return utcTime.atZone(ZoneId.of("UTC")).withZoneSameInstant(ZoneId.systemDefault()).toLocalDateTime().minusHours(2);
+    }
 }

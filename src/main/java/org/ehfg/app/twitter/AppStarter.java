@@ -13,12 +13,12 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 @SpringBootApplication
 @EnableDiscoveryClient
 public class AppStarter extends SpringBootServletInitializer {
-	public static void main(String[] args) {
-		SpringApplication.run(AppStarter.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(AppStarter.class, args);
+    }
 
-	@Override
-	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
-		return builder.sources(AppStarter.class);
-	}
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
+        return builder.sources(AppStarter.class);
+    }
 }
