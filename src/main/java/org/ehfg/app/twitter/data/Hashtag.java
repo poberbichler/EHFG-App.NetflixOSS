@@ -15,7 +15,7 @@ public class Hashtag {
 	private final String hashtag;
 
 	/**
-	 * @return a new instance of Hashtag with the given hashtag
+	 * @return a new instance of {@link Hashtag} for the given user input
 	 */
 	public static Hashtag valueOf(String hashtag) {
 		if (hashtag.startsWith("#")) {

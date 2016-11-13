@@ -1,6 +1,7 @@
 package org.ehfg.app.twitter.web;
 
 import org.ehfg.app.twitter.data.Hashtag;
+import org.ehfg.app.twitter.data.TweetPage;
 import org.ehfg.app.twitter.data.TweetRepresentation;
 import org.ehfg.app.twitter.service.TwitterService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +34,7 @@ public class TweetController {
     }
 
     @GetMapping("{hashtag}/page/{pageCounter}/{size}")
-    public Page<? extends TweetRepresentation> getPage(@PathVariable("hashtag") Hashtag hashtag, @PathVariable("pageCounter") int pageCounter, @PathVariable("size") int size) {
+    public TweetPage getPage(@PathVariable("hashtag") Hashtag hashtag, @PathVariable("pageCounter") int pageCounter, @PathVariable("size") int size) {
         return twitterService.findPage(hashtag, pageCounter, size);
     }
 }

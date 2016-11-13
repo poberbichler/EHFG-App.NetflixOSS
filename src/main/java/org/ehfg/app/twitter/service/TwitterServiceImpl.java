@@ -1,6 +1,7 @@
 package org.ehfg.app.twitter.service;
 
 import org.ehfg.app.twitter.data.Hashtag;
+import org.ehfg.app.twitter.data.TweetPage;
 import org.ehfg.app.twitter.data.TweetRepresentation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -28,12 +29,13 @@ class TwitterServiceImpl implements TwitterService {
 
 
 	@Override
-	public Collection<? extends TweetRepresentation> findNewerTweets(Hashtag hashtag, LocalDateTime lastTweet) {
-		return tweetRepository.findNewerTweetsByHashtag(hashtag.getHashtagForDb(), lastTweet, CREATION_DATE);
+	public Collection<? extends TweetRepresentation> findNewerTweets(Hashtag hashtag, LocalDateTime lastTweetTimestamp) {
+		return tweetRepository.findNewerTweetsByHashtag(hashtag.getHashtagForDb(), lastTweetTimestamp, CREATION_DATE);
 	}
 
 	@Override
-	public Page<? extends TweetRepresentation> findPage(Hashtag hashtag, int pageCounter, int size) {
-		return tweetRepository.findByHashtagOrderByCreationDateDesc(hashtag.getHashtagForDb(), new PageRequest(pageCounter, size));
+	public TweetPage findPage(Hashtag hashtag, int pageCounter, int size) {
+		Page<? extends TweetRepresentation> page = tweetRepository.findByHashtagOrderByCreationDateDesc(hashtag.getHashtagForDb(), new PageRequest(pageCounter, size));
+		return new TweetPage(page, hashtag.getHashtagWithHash());
 	}
 }
