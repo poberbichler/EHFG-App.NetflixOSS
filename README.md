@@ -1,0 +1,1 @@
+Service providing the program endpoint for the EHFG-App
