@@ -27,11 +27,10 @@ import java.util.Arrays;
  * @author patrick
  * @since 11.2014
  */
-@EnableSocial
 @EnableCaching
 @Configuration
 @PropertySource({ "classpath:config/twitter.properties" })
-public class ExternalConfig implements SocialConfigurer {
+public class ExternalConfig {
 	@Autowired
 	private Environment environment;
 
@@ -46,31 +45,5 @@ public class ExternalConfig implements SocialConfigurer {
 	@Bean
 	public static PropertySourcesPlaceholderConfigurer placeholderConfigurer() {
 		return new PropertySourcesPlaceholderConfigurer();
-	}
-
-	@Bean
-	public Twitter twitter() {
-		return new TwitterTemplate(
-				environment.getProperty("twitter.consumer.key"),
-				environment.getProperty("twitter.consumer.secret"), 
-				environment.getProperty("twitter.access.token"),
-				environment.getProperty("twitter.access.secret"));
-	}
-
-	@Override
-	public void addConnectionFactories(ConnectionFactoryConfigurer configurer, Environment environment) {
-		configurer.addConnectionFactory(new TwitterConnectionFactory(
-				environment.getProperty("twitter.consumer.key"), 
-				environment.getProperty("twitter.consumer.secret")));
-	}
-
-	@Override
-	public UserIdSource getUserIdSource() {
-		return () -> "EHFG_APP";
-	}
-
-	@Override
-	public UsersConnectionRepository getUsersConnectionRepository(ConnectionFactoryLocator factoryLocator) {
-		return new InMemoryUsersConnectionRepository(factoryLocator);
 	}
 }
