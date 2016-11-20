@@ -16,8 +16,8 @@ public interface TwitterFacade {
 	String findHashtag();
 	
 	Collection<TweetDTO> findNewerTweetsForCongress(LocalDateTime lastTweet);
-	TweetPageDTO findTweetPage(Integer pageId);
-	TweetPageDTO findTweetPageWithSize(Integer pageId, Integer pageSize);
+	Object findTweetPage(int pageId);
+	Object findTweetPageWithSize(int pageId, int pageSize);
 
 	Collection<TwitterStatisticLine> findStats();
 	

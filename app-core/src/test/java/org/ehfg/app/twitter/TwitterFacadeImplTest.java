@@ -8,9 +8,11 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.web.client.RestOperations;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
@@ -24,7 +26,7 @@ public class TwitterFacadeImplTest {
 	private MasterDataFacade masterDataFacade;
 
 	@Mock
-	private TwitterStreamingFacade streamingFacade;
+	private RestOperations restTemplate;
 
 	private static final String CURRENT_HASHTAG = "#EHFG2014";
 
@@ -38,25 +40,25 @@ public class TwitterFacadeImplTest {
 
 	@Test
 	public void shouldDoNothingIfCurrentStreamIsRunning() {
-		when(streamingFacade.findAllListeners()).thenReturn(Arrays.asList(CURRENT_HASHTAG));
+		when(restTemplate.getForObject(TwitterFacadeImpl.TWITTER_URL + "/listener", List.class)).thenReturn(Collections.singletonList(CURRENT_HASHTAG));
 
 		TwitterStreamStatus status = twitterFacade.checkIfRelevantStreamIsRunning();
 		assertEquals(TwitterStreamStatus.RUNNING, status);
 
-		verify(streamingFacade).findAllListeners();
-		verifyNoMoreInteractions(streamingFacade);
+		verify(restTemplate).getForObject(TwitterFacadeImpl.TWITTER_URL + "/listener", List.class);
+		verifyNoMoreInteractions(restTemplate);
 	}
 
 	@Test
 	public void shouldRestartStreamIfNoOneIsActive() {
-		when(streamingFacade.findAllListeners()).thenReturn(Collections.<String> emptyList());
+		when(restTemplate.getForObject(TwitterFacadeImpl.TWITTER_URL + "/listener", List.class)).thenReturn(Collections.<String> emptyList());
 
 		callAndVerifyRestartBehaviour();
 	}
 
 	@Test
 	public void shouldRestartStreamIfWrongStreamWasFound() {
-		when(streamingFacade.findAllListeners()).thenReturn(
+		when(restTemplate.getForObject(TwitterFacadeImpl.TWITTER_URL + "/listener", List.class)).thenReturn(
 				Arrays.asList("asdfasdf", "", "umpalumpa", CURRENT_HASHTAG.concat("a"), CURRENT_HASHTAG.substring(1)));
 		
 		callAndVerifyRestartBehaviour();
@@ -69,7 +71,7 @@ public class TwitterFacadeImplTest {
 		TwitterStreamStatus status = twitterFacade.checkIfRelevantStreamIsRunning();
 		assertEquals(TwitterStreamStatus.HAD_TO_RESTART, status);
 
-		verify(streamingFacade).findAllListeners();
-		verify(streamingFacade).addListener(Hashtag.valueOf(CURRENT_HASHTAG));
+		verify(restTemplate).getForObject(TwitterFacadeImpl.TWITTER_URL + "/listener", List.class);
+		verify(restTemplate).postForObject(TwitterFacadeImpl.TWITTER_URL + "/listener/{hashtag}", null, List.class, CURRENT_HASHTAG);
 	}
 }

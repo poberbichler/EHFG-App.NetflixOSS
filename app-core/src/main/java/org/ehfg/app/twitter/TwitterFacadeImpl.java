@@ -3,132 +3,152 @@ package org.ehfg.app.twitter;
 import org.apache.commons.lang3.Validate;
 import org.ehfg.app.base.ConfigurationDTO;
 import org.ehfg.app.base.MasterDataFacade;
-import org.ehfg.app.program.ProgramFacade;
-import org.ehfg.app.program.SessionDTO;
+import org.ehfg.app.search.ResultType;
+import org.ehfg.app.search.SearchIndexDataProvider;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestOperations;
 
 import java.time.LocalDateTime;
 import java.util.*;
-
-import static java.util.stream.Collectors.toList;
 
 /**
  * @author patrick
  * @since 03.2014
  */
 @Component
-class TwitterFacadeImpl implements TwitterFacade {
-	private final TweetRepository tweetRepository;
-	private final TwitterStreamingFacade streamingFacade;
-	private final MasterDataFacade masterDataFacade;
-	private final ProgramFacade programFacade;
+final class TwitterFacadeImpl implements TwitterFacade, SearchIndexDataProvider<TweetDTO> {
+    static final String TWITTER_URL = "http://EHFGAPP-TWITTER";
 
-	@Autowired
-	public TwitterFacadeImpl(TweetRepository tweetRepository, TwitterStreamingFacade streamingFacade, MasterDataFacade masterDataFacade, ProgramFacade programFacade) {
-		this.tweetRepository = tweetRepository;
-		this.streamingFacade = streamingFacade;
-		this.masterDataFacade = masterDataFacade;
-		this.programFacade = programFacade;
-	}
+    private final RestOperations restTemplate;
+    private final MasterDataFacade masterDataFacade;
 
-	@Override
-	public Collection<String> findStreams() {
-		return streamingFacade.findAllListeners();
-	}
+    @Autowired
+    public TwitterFacadeImpl(RestOperations restTemplate, MasterDataFacade masterDataFacade) {
+        this.restTemplate = restTemplate;
+        this.masterDataFacade = masterDataFacade;
+    }
 
-	@Override
-	public void addStream(String hashtag) {
-		Validate.notNull(hashtag, "hashtag must not be null");
-		streamingFacade.addListener(Hashtag.valueOf(hashtag));
-	}
+    @Override
+    public Collection<String> findStreams() {
+        return restTemplate.getForObject(TWITTER_URL + "/listener", Collection.class);
+    }
 
-	@Override
-	public void removeStream(String hashtag) {
-		Validate.notNull(hashtag, "hashtag must not be null");
-		streamingFacade.removeListener(Hashtag.valueOf(hashtag));
-	}
+    @Override
+    public void addStream(String hashtag) {
+        Validate.notNull(hashtag, "hashtag must not be null");
+        restTemplate.postForObject(TWITTER_URL + "/listener/{hashtag}", null, List.class, hashtag);
+    }
 
-	@Override
-	public String findHashtag() {
-		return masterDataFacade.getAppConfiguration().getHashtag();
-	}
+    @Override
+    public void removeStream(String hashtag) {
+        Validate.notNull(hashtag, "hashtag must not be null");
+        restTemplate.delete(TWITTER_URL + "/listener/{hashtag}", hashtag);
+    }
 
-	@Override
-	public Collection<TweetDTO> findNewerTweetsForCongress(LocalDateTime lastTweet) {
-		final ConfigurationDTO config = masterDataFacade.getAppConfiguration();
-		if (config != null && config.getHashtag() != null) {
-			return TweetMapper.map(tweetRepository.findNewerTweetsByHashtag(config.getHashtag().toLowerCase(), lastTweet, byCreationDate()));
-		}
+    @Override
+    public String findHashtag() {
+        return masterDataFacade.getAppConfiguration().getHashtag();
+    }
 
-		return Collections.emptyList();
-	}
+    @Override
+    public Collection<TweetDTO> findNewerTweetsForCongress(LocalDateTime lastTweet) {
+        final ConfigurationDTO config = masterDataFacade.getAppConfiguration();
+        if (config != null && config.getHashtag() != null) {
+            return restTemplate.getForObject(TWITTER_URL + "/{hashtag}/{timestamp}", Collection.class, config.getHashtag(), lastTweet);
+        }
 
-	private Sort byCreationDate() {
-		return new Sort(new Sort.Order(Sort.Direction.DESC, "creationDate"));
-	}
+        return Collections.emptyList();
+    }
 
-	@Override
-	public TweetPageDTO findTweetPage(Integer pageId) {
-		final ConfigurationDTO config = masterDataFacade.getAppConfiguration();
-		return this.findTweetPageWithSize(pageId, config.getNumberOfTweets());
-	}
+    @Override
+    public Object findTweetPage(int pageId) {
+        return findTweetPageWithSize(pageId, masterDataFacade.getAppConfiguration().getNumberOfTweets());
+    }
 
 
-	@Override
-	public TweetPageDTO findTweetPageWithSize(Integer pageId, Integer pageSize) {
-		Validate.notNull(pageId, "pageId must not be null!");
-		Validate.notNull(pageSize, "pageSize must not be null!");
+    @Override
+    public Object findTweetPageWithSize(int pageId, int pageSize) {
+        Validate.notNull(pageId, "pageId must not be null!");
+        Validate.notNull(pageSize, "pageSize must not be null!");
 
-		final String currentHashtag = this.findHashtag();
-		final Page<Tweet> tweets = tweetRepository.findByHashtagOrderByCreationDateDesc(
+        String currentHashtag = findHashtag().substring(1);
+
+        return restTemplate.getForObject(TWITTER_URL + "/tweets/{hashtag}/page/{pageCounter}/{size}", Object.class, currentHashtag, pageId, pageSize);
+
+		/*
+        final Page<Tweet> tweets = tweetRepository.findByHashtagOrderByCreationDateDesc(
 				currentHashtag.toLowerCase(), new PageRequest(pageId, pageSize));
 
 		return new TweetPageDTO(TweetMapper.map(tweets.getContent()), pageId, tweets.getTotalPages(), currentHashtag);
-	}
+		*/
+    }
 
-	@Override
-	public Collection<TwitterStatisticLine> findStats() {
-		final List<Tweet> allTweets = tweetRepository.findAll();
-		final Collection<SessionDTO> sessions = programFacade.findAllSessionsWithoutDayInformation();
+    @Override
+    public Collection<TwitterStatisticLine> findStats() {
+        return Collections.emptyList();
+        /*
+        final List<Tweet> allTweets = tweetRepository.findAll();
+        final Collection<SessionDTO> sessions = programFacade.findAllSessionsWithoutDayInformation();
 
-		Map<SessionDTO, Integer> sessionTweetCountMap = new HashMap<>();
-		allTweets.parallelStream().forEach(tweet ->
-			sessions.stream()
-					.filter(session -> session.wasDuring(tweet.getCreationDate()))
-					.forEach(session -> {
-						sessionTweetCountMap.putIfAbsent(session, 0);
-						sessionTweetCountMap.computeIfPresent(session, (s, counter) -> counter++);
-					})
-		);
+        Map<SessionDTO, Integer> sessionTweetCountMap = new HashMap<>();
+        allTweets.parallelStream().forEach(tweet ->
+                sessions.stream()
+                        .filter(session -> session.wasDuring(tweet.getCreationDate()))
+                        .forEach(session -> {
+                            sessionTweetCountMap.putIfAbsent(session, 0);
+                            sessionTweetCountMap.computeIfPresent(session, (s, counter) -> counter++);
+                        })
+        );
 
-		return sessionTweetCountMap.entrySet().stream()
-				.map(entry -> new TwitterStatisticLine(entry.getKey().getNameWithCode(), entry.getValue()))
-				.collect(toList());
-	}
+        return sessionTweetCountMap.entrySet().stream()
+                .map(entry -> new TwitterStatisticLine(entry.getKey().getNameWithCode(), entry.getValue()))
+                .collect(toList());
+        */
+    }
 
-	@Override
-	public TwitterStreamStatus checkIfRelevantStreamIsRunning() {
-		final Collection<String> currentStreams = findStreams();
-		final String thisYearsHashtag = findHashtag();
+    @Override
+    public TwitterStreamStatus checkIfRelevantStreamIsRunning() {
+        final Collection<String> currentStreams = findStreams();
+        final String thisYearsHashtag = findHashtag();
 
-		if (currentStreams.isEmpty() || !currentStreams.contains(thisYearsHashtag)) {
-			addStream(thisYearsHashtag);
-			return TwitterStreamStatus.HAD_TO_RESTART;
-		}
+        if (currentStreams.isEmpty() || !currentStreams.contains(thisYearsHashtag)) {
+            addStream(thisYearsHashtag);
+            return TwitterStreamStatus.HAD_TO_RESTART;
+        }
 
-		return TwitterStreamStatus.RUNNING;
-	}
+        return TwitterStreamStatus.RUNNING;
+    }
 
     @Override
     public List<TweetDTO> findTweetsForExport(String hashtag) {
         Validate.notNull(hashtag, "hashtag must not be null");
+        return Collections.emptyList();
+
+        /*
         return tweetRepository.findByHashtagIgnoreCase(hashtag)
                 .parallelStream()
                 .map(TweetMapper::mapUnformattedTweet)
                 .collect(toList());
+                */
+    }
+
+    @Override
+    public Collection<? extends TweetDTO> getData() {
+        return Collections.emptyList();
+        /*
+        return tweetRepository.findTop100ByHashtagOrderByCreationDateDesc(findHashtag())
+				.stream()
+				.map(TweetMapper::mapUnformattedTweet)
+				.collect(toList());
+				*/
+    }
+
+    @Override
+    public Set<ResultType> getResultTypes() {
+        return EnumSet.noneOf(ResultType.class);
     }
 }
