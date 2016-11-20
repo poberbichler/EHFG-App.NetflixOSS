@@ -13,7 +13,7 @@ import java.util.Map;
  */
 public interface ProgramFacade {
 	Collection<SpeakerDTO> findAllSpeakers();
-	
+
 	Collection<SpeakerDTO> findSpeakersWithSession();
 
 	Map<LocalDate, ? extends ConferenceDayRepresentation> findAllSessions();
@@ -22,8 +22,6 @@ public interface ProgramFacade {
 
 	void saveDays(List<ConferenceDayDTO> dayList);
 
-	ConferenceDayDTO addDay();
-	
 	Collection<SessionDTO> findAllSessionsWithoutDayInformation();
 	
 	List<String> findAvailableLocations();

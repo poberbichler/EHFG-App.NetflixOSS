@@ -1,15 +1,11 @@
 package org.ehfg.app.program;
 
-import org.apache.commons.collections4.CollectionUtils;
 import org.ehfg.app.rest.ConferenceDayRepresentation;
-import org.ehfg.app.search.Indexable;
-import org.ehfg.app.search.ResultType;
-import org.ehfg.app.search.SearchIndexDataProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestOperations;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -18,24 +14,19 @@ import java.util.stream.Collectors;
  * @since 06.04.2014
  */
 @Component
-final class ProgramFacadeImpl implements ProgramFacade, SearchIndexDataProvider<Indexable> {
-	private final SpeakerRepository speakerRepository;
-	private final SessionRepository sessionRepository;
-	private final ConferenceDayRepository conferenceDayRepository;
+final class ProgramFacadeImpl implements ProgramFacade {
+	private final RestOperations restTemplate;
 
 	@Autowired
-	public ProgramFacadeImpl(SpeakerRepository speakerRepository, SessionRepository sessionRepository,
-			ConferenceDayRepository conferenceDayRepository) {
-		this.speakerRepository = speakerRepository;
-		this.sessionRepository = sessionRepository;
-		this.conferenceDayRepository = conferenceDayRepository;
+	public ProgramFacadeImpl(RestOperations restTemplate) {
+		this.restTemplate = restTemplate;
 	}
 
 	@Override
 	public Collection<SpeakerDTO> findAllSpeakers() {
-		return speakerRepository.findAll();
+		return restTemplate.getForObject("http://EHFGAPP-PROGRAM/program/speakers", Collection.class);
 	}
-	
+
 	@Override
 	public Collection<SpeakerDTO> findSpeakersWithSession() {
 		final Set<String> eventSpeakers = findEverySpeakerForSession();
@@ -53,73 +44,29 @@ final class ProgramFacadeImpl implements ProgramFacade, SearchIndexDataProvider<
 
 	@Override
 	public Map<LocalDate, ? extends ConferenceDayRepresentation> findAllSessions() {
-		final List<ConferenceDayDTO> conferenceDays = ConferenceDayMapper.mapToDTO(conferenceDayRepository.findAll());
-
-		return sessionRepository.findAll().stream()
-				.filter(session -> findDay(conferenceDays, session).isPresent())
-				.collect(Collectors.toMap(SessionDTO::getDay,
-						session -> new ConferenceDayWithSessionsDTO(findDay(conferenceDays, session).get().getDescription(), session),
-						(existingSession, newSession) -> existingSession.addSession(newSession.getSessions()),
-						TreeMap::new));
-	}
-
-	/**
-	 * searches for a {@link ConferenceDayDTO} for the given date
-	 */
-	private Optional<ConferenceDayDTO> findDay(final List<ConferenceDayDTO> days, final SessionDTO session) {
-		final LocalDateTime sessionDate = session.getStartTime();
-
-		return days.stream()
-				.filter(day -> day.getDay().equals(sessionDate.toLocalDate()))
-				.findFirst();
+		return restTemplate.getForObject("http://EHFGAPP-PROGRAM/program", Map.class);
 	}
 
 	@Override
 	public List<ConferenceDayDTO> findDays() {
-		List<ConferenceDayDTO> result = ConferenceDayMapper.mapToDTO(conferenceDayRepository.findAll());
-		Collections.sort(result);
-
-		return result;
+		return restTemplate.getForObject("http://EHFGAPP-PROGRAM/conferencedays", List.class);
 	}
 
 	@Override
 	public void saveDays(List<ConferenceDayDTO> dayList) {
-		final List<ConferenceDay> source = ConferenceDayMapper.mapToEntity(dayList);
-		conferenceDayRepository.deleteAll();
-		conferenceDayRepository.save(source);
-	}
-
-	@Override
-	public ConferenceDayDTO addDay() {
-		final ConferenceDay day = new ConferenceDay();
-		day.setDate(LocalDate.now());
-		day.setDescription("description");
-		conferenceDayRepository.save(day);
-
-		return ConferenceDayMapper.map(day);
+		restTemplate.postForLocation("http://EHFGAPP-PROGRAM/conferencedays", dayList);
 	}
 
 	@Override
 	public Collection<SessionDTO> findAllSessionsWithoutDayInformation() {
-		return sessionRepository.findAll();
+		return restTemplate.getForObject("http://EHFGAPP-PROGRAM/program/sessions", Collection.class);
 	}
 
 	@Override
 	public List<String> findAvailableLocations() {
-		return sessionRepository.findAll().stream()
+		return findAllSessionsWithoutDayInformation().stream()
 				.map(SessionDTO::getLocation)
 				.distinct()
 				.collect(Collectors.toList());
-	}
-
-	@Override
-	public Collection<? extends Indexable> getData() {
-		return CollectionUtils.union(findAllSessionsWithoutDayInformation(), findAllSpeakers());
-
-	}
-
-	@Override
-	public Set<ResultType> getResultTypes() {
-		return EnumSet.of(ResultType.SPEAKER, ResultType.SESSIONS);
 	}
 }

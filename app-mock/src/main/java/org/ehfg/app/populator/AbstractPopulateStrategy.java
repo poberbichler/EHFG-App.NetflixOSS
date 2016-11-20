@@ -4,7 +4,6 @@ import org.ehfg.app.InMemoryService;
 import org.ehfg.app.base.CoordinateDTO;
 import org.ehfg.app.base.MasterDataFacade;
 import org.ehfg.app.program.ProgramFacade;
-import org.ehfg.app.program.SessionRepository;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -16,8 +15,11 @@ import java.util.Random;
 /**
  * @author patrick
  * @since 12.2014
+ *
+ * @deprecated most likely not needed any more
  */
 @InMemoryService
+@Deprecated
 abstract class AbstractPopulateStrategy implements DatabasePopulateStrategy, ApplicationContextAware {
 	static final DateTimeFormatter FORMAT = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 	
@@ -26,9 +28,6 @@ abstract class AbstractPopulateStrategy implements DatabasePopulateStrategy, App
 	
 	@Autowired
 	protected ProgramFacade programFacade;
-	
-	@Autowired
-	protected SessionRepository sessionRepository;
 	
 	ApplicationContext applicationContext;
 	

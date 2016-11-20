@@ -11,12 +11,15 @@ import java.lang.annotation.*;
  * 
  * @author patrick
  * @since 12.2014
+ *
+ * @deprecated most likely not needed any more
  */
 @Service
 @Profile("in-memory-db")
 @Documented
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
+@Deprecated
 public @interface InMemoryService {
 	// empty
 }
