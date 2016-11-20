@@ -35,7 +35,6 @@ public class SearchController {
 
 	@RequestMapping(method = RequestMethod.GET, value = "refresh")
 	public ModelAndView refreshIndex() {
-		searchService.buildIndex();
 		return createAndFillView(null);
 	}
 

@@ -37,8 +37,7 @@ import java.util.List;
 @Configuration
 @EnableScheduling
 @EnableAspectJAutoProxy(proxyTargetClass = true)
-@PropertySource(ignoreResourceNotFound = true,
-		value = {"classpath:config.properties", "file:////${user.home}/ehfg.properties"})
+@PropertySource(ignoreResourceNotFound = true, value = {"file:////${user.home}/ehfg.properties"})
 public class WebConfig extends WebMvcConfigurerAdapter {
 	@Value("${absolute.mobile.path:}")
 	private String absoluteMobilePath;
@@ -46,13 +45,6 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 	@Override
 	public void addCorsMappings(CorsRegistry registry) {
 		registry.addMapping("/rest/**");
-	}
-
-	@Bean
-	public ViewResolver beanNameViewResolver() {
-		final BeanNameViewResolver resolver = new BeanNameViewResolver();
-		resolver.setOrder(2);
-		return resolver;
 	}
 
 	@Override
@@ -65,6 +57,10 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
+		registry.addResourceHandler("/eureka/css/**").addResourceLocations("classpath:/static/eureka/css/");
+		registry.addResourceHandler("/eureka/js/**").addResourceLocations("classpath:/static/eureka/js/");
+		registry.addResourceHandler("/eureka/fonts/**").addResourceLocations("classpath:/static/eureka/fonts/");
+		registry.addResourceHandler("/eureka/images/**").addResourceLocations("classpath:/static/eureka/images/");
 
 		if (!StringUtils.isEmpty(absoluteMobilePath)) {
 			registry.addResourceHandler("/mobile/**").addResourceLocations(absoluteMobilePath);
