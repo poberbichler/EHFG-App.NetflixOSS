@@ -1,18 +1,12 @@
 package org.ehfg.app.base;
 
-import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.ehfg.app.search.Indexable;
-import org.ehfg.app.search.ResultType;
-import org.ehfg.app.search.SearchIndexDataProvider;
 import org.ehfg.app.validation.Validate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;
-import java.util.EnumSet;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -20,7 +14,7 @@ import java.util.stream.Collectors;
  * @since 14.03.2014
  */
 @Component
-class MasterDataFacadeImpl implements MasterDataFacade, SearchIndexDataProvider<Indexable> {
+class MasterDataFacadeImpl implements MasterDataFacade {
     private final AppConfigRepository configRepository;
     private final PointOfInterestRepository pointOfInterestRepository;
     private final LocationRepository locationRepository;
@@ -171,7 +165,7 @@ class MasterDataFacadeImpl implements MasterDataFacade, SearchIndexDataProvider<
 
     @Override
     public String saveLocation(LocationDTO source) {
-        Location target = null;
+        Location target;
         if (source.getMappedPointOfInterest() != null && !StringUtils.isEmpty(source.getMappedPointOfInterest().getId())) {
             PointOfInterest point = pointOfInterestRepository.findOne(source.getMappedPointOfInterest().getId());
             target = new Location(source.getId(), source.getName(), point);
@@ -188,15 +182,5 @@ class MasterDataFacadeImpl implements MasterDataFacade, SearchIndexDataProvider<
     @Override
     public void deleteLocation(String locationId) {
         locationRepository.delete(locationId);
-    }
-
-    @Override
-    public Collection<? extends Indexable> getData() {
-        return CollectionUtils.union(findAllLocation(), findAllPointsOfInterest());
-    }
-
-    @Override
-    public Set<ResultType> getResultTypes() {
-        return EnumSet.of(ResultType.LOCATION);
     }
 }

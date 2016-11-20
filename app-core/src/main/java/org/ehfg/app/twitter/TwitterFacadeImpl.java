@@ -3,12 +3,7 @@ package org.ehfg.app.twitter;
 import org.apache.commons.lang3.Validate;
 import org.ehfg.app.base.ConfigurationDTO;
 import org.ehfg.app.base.MasterDataFacade;
-import org.ehfg.app.search.ResultType;
-import org.ehfg.app.search.SearchIndexDataProvider;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestOperations;
 
@@ -20,7 +15,7 @@ import java.util.*;
  * @since 03.2014
  */
 @Component
-final class TwitterFacadeImpl implements TwitterFacade, SearchIndexDataProvider<TweetDTO> {
+final class TwitterFacadeImpl implements TwitterFacade {
     static final String TWITTER_URL = "http://EHFGAPP-TWITTER";
 
     private final RestOperations restTemplate;
@@ -134,21 +129,5 @@ final class TwitterFacadeImpl implements TwitterFacade, SearchIndexDataProvider<
                 .map(TweetMapper::mapUnformattedTweet)
                 .collect(toList());
                 */
-    }
-
-    @Override
-    public Collection<? extends TweetDTO> getData() {
-        return Collections.emptyList();
-        /*
-        return tweetRepository.findTop100ByHashtagOrderByCreationDateDesc(findHashtag())
-				.stream()
-				.map(TweetMapper::mapUnformattedTweet)
-				.collect(toList());
-				*/
-    }
-
-    @Override
-    public Set<ResultType> getResultTypes() {
-        return EnumSet.noneOf(ResultType.class);
     }
 }

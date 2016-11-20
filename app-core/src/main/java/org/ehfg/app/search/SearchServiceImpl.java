@@ -21,12 +21,10 @@ public class SearchServiceImpl implements SearchService {
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 
 	private final String baseUrl;
-	private final List<SearchIndexDataProvider> provider;
 
 	@Autowired
-	public SearchServiceImpl(@Value("${search.endpoint:http://localhost:8081}") String baseUrl, List<SearchIndexDataProvider> provider) {
+	public SearchServiceImpl(@Value("${search.endpoint:http://localhost:8081}") String baseUrl) {
 		this.baseUrl = baseUrl;
-		this.provider = provider;
 	}
 
 	@Override
@@ -39,19 +37,5 @@ public class SearchServiceImpl implements SearchService {
 			logger.error("an exception occured when searching for [{}]", input, e);
 			return SearchResult.empty();
 		}
-	}
-
-	@Override
-	@EventListener(UpdateIndexEvent.class)
-	public boolean buildIndex() {
-		List<Indexable> indexables = new LinkedList<>();
-		for (SearchIndexDataProvider searchIndexDataProvider : provider) {
-			indexables.addAll(searchIndexDataProvider.getData());
-		}
-
-		boolean indexUpdateResult = new RestTemplate().postForObject(baseUrl + "/rest/search/", indexables, boolean.class);
-		logger.info("resttemplate returned {}", indexUpdateResult);
-
-		return indexUpdateResult;
 	}
 }

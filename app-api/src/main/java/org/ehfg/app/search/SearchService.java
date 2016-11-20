@@ -12,6 +12,4 @@ public interface SearchService {
 	 *     An empty list will be returned if the input parameter is null or empty
 	 */
 	SearchResultRepresentation findBy(String input);
-
-	boolean buildIndex();
 }
