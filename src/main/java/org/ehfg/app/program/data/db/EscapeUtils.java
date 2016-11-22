@@ -1,4 +1,4 @@
-package org.ehfg.app.program.data;
+package org.ehfg.app.program.data.db;
 
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;

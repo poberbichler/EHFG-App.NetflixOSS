@@ -1,4 +1,4 @@
-package org.ehfg.app.program.data;
+package org.ehfg.app.program.data.db;
 
 import org.apache.commons.lang.StringUtils;
 import org.ehfg.app.program.data.input.speaker.RssSpeaker;

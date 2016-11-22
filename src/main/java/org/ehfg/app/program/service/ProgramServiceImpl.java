@@ -1,7 +1,7 @@
 package org.ehfg.app.program.service;
 
-import org.ehfg.app.program.data.SpeakerRepository;
-import org.ehfg.app.program.data.SessionRepository;
+import org.ehfg.app.program.data.db.SpeakerRepository;
+import org.ehfg.app.program.data.db.SessionRepository;
 import org.ehfg.app.program.data.output.ConferenceDayRepresentation;
 import org.ehfg.app.program.data.output.ConferenceDayWithSessionsDTO;
 import org.ehfg.app.program.data.output.SessionRepresentation;

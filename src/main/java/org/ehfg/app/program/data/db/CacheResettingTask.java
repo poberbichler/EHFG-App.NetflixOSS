@@ -1,4 +1,4 @@
-package org.ehfg.app.program.data;
+package org.ehfg.app.program.data.db;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

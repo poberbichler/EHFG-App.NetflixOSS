@@ -1,6 +1,5 @@
 package org.ehfg.app.program.data.input.events;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
 import org.ehfg.app.program.data.input.adapter.LocalDateAdapter;
 import org.ehfg.app.program.data.input.adapter.LocalTimeAdapter;
 
@@ -126,10 +125,5 @@ public final class Event {
 
 	public void setCode(String code) {
 		this.code = code;
-	}
-	
-	@Override
-	public String toString() {
-		return ToStringBuilder.reflectionToString(this);
 	}
 }

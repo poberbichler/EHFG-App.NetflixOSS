@@ -1,7 +1,5 @@
 package org.ehfg.app.program.data.input.speaker;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
-
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -63,10 +61,5 @@ public final class Speaker {
 
 	public void setImagePath(String imagePath) {
 		this.imagePath = imagePath;
-	}
-
-	@Override
-	public String toString() {
-		return ToStringBuilder.reflectionToString(this);
 	}
 }
