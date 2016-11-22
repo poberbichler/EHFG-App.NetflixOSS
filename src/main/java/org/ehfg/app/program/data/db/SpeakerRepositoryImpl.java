@@ -17,6 +17,7 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import static org.apache.commons.lang.StringUtils.isEmpty;
+import static org.apache.commons.lang.StringUtils.isNotEmpty;
 
 /**
  * @author patrick
@@ -39,7 +40,7 @@ class SpeakerRepositoryImpl implements SpeakerRepository {
 		List<Speaker> speakers = retrievalStrategy.fetchData().getChannel().getSpeakers();
 		logger.info("received {} speakers", speakers.size());
 
-		Predicate<Speaker> hasFullName = (speaker -> isEmpty(speaker.getFirstname()) || isEmpty(speaker.getLastname()));
+		Predicate<Speaker> hasFullName = (speaker -> isNotEmpty(speaker.getFirstname()) && isNotEmpty(speaker.getLastname()));
 
 		return speakers.stream()
 				.filter(hasFullName)
