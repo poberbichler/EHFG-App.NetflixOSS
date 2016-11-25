@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
  * @since 06.04.2014
  */
 @Component
-final class ProgramFacadeImpl implements ProgramFacade {
+class ProgramFacadeImpl implements ProgramFacade {
 	private final RestOperations restTemplate;
 
 	@Autowired

@@ -6,7 +6,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanInstantiationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ResolvableType;
-import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.util.Collection;
@@ -20,7 +19,7 @@ import java.util.stream.Collectors;
  * @author patrick
  * @since 07.2016
  */
-@Component
+//@Component
 public class ValidateSearchIndexDataProvider {
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 	private Collection<SearchIndexDataProvider<?>> providers;
