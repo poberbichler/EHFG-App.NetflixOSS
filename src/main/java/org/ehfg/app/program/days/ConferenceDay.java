@@ -1,6 +1,7 @@
 package org.ehfg.app.program.days;
 
 import com.google.common.base.MoreObjects;
+import com.google.common.base.Objects;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -40,6 +41,25 @@ public class ConferenceDay {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	@Override
+	public boolean equals(Object thatObject) {
+		if (this == thatObject) {
+			return true;
+		}
+
+		if (!(thatObject instanceof ConferenceDay)) {
+			return false;
+		}
+
+		ConferenceDay that = (ConferenceDay) thatObject;
+		return Objects.equal(id, that.id);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hashCode(id);
 	}
 
 	@Override
