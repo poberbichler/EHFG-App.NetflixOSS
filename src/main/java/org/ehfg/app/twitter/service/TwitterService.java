@@ -1,6 +1,7 @@
 package org.ehfg.app.twitter.service;
 
 import org.ehfg.app.twitter.data.Hashtag;
+import org.ehfg.app.twitter.data.Tweet;
 import org.ehfg.app.twitter.data.TweetPage;
 import org.ehfg.app.twitter.data.TweetRepresentation;
 
@@ -15,4 +16,6 @@ public interface TwitterService {
 	Collection<? extends TweetRepresentation> findNewerTweets(Hashtag hashtag, LocalDateTime lastTweet);
 
 	TweetPage findPage(Hashtag hashtag, int pageCounter, int size);
+
+	Collection<Tweet> findForIndex();
 }
