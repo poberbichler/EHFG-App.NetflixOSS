@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 /**
  * @author patrick
  * @since 11.2016
@@ -21,9 +23,11 @@ public class SearchController {
 		this.searchService = searchService;
 	}
 
-	@GetMapping("{input}")
-	public SearchResult getSearchResult(@PathVariable("input") String input) {
-		return searchService.search(input);
+	@GetMapping({"{input}", "{input}/{maxResults}"})
+	public SearchResult getSearchResult(@PathVariable("input") String input,
+			@PathVariable(name = "maxResults") Optional<Integer> maxResults) {
+
+		return searchService.search(input, maxResults.orElse(50));
 	}
 
 	@PostMapping

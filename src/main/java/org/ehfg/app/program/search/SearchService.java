@@ -5,6 +5,6 @@ package org.ehfg.app.program.search;
  * @since 11.2016
  */
 public interface SearchService {
-	SearchResult search(String input);
+	SearchResult search(String input, int maxResults);
 	boolean updateIndex();
 }

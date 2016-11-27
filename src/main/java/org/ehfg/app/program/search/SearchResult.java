@@ -1,17 +1,34 @@
 package org.ehfg.app.program.search;
 
+import javax.xml.bind.annotation.XmlElementWrapper;
+import java.util.Collection;
+import java.util.LinkedList;
+
 /**
  * @author patrick
  * @since 11.2016
  */
 public class SearchResult {
-	private final String text;
+	@XmlElementWrapper(name = "sessions")
+	private final Collection<SearchResultItem> sessions = new LinkedList<>();
+	@XmlElementWrapper(name = "speakers")
+	private final Collection<SearchResultItem> speakers = new LinkedList<>();
 
-	public SearchResult(String text) {
-		this.text = text;
+	public SearchResult addItem(SearchResultItem item) {
+		if (item.getType() == ResultType.SPEAKER) {
+			speakers.add(item);
+		} else {
+			sessions.add(item);
+		}
+
+		return this;
 	}
 
-	public String getText() {
-		return text;
+	public Collection<SearchResultItem> getSpeakers() {
+		return speakers;
+	}
+
+	public Collection<SearchResultItem> getSessions() {
+		return sessions;
 	}
 }
