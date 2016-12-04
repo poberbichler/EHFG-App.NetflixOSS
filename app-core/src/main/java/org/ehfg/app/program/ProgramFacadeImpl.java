@@ -2,8 +2,14 @@ package org.ehfg.app.program;
 
 import org.ehfg.app.rest.ConferenceDayRepresentation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestOperations;
+import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDate;
 import java.util.*;
@@ -24,7 +30,7 @@ class ProgramFacadeImpl implements ProgramFacade {
 
 	@Override
 	public Collection<SpeakerDTO> findAllSpeakers() {
-		return restTemplate.getForObject("http://EHFGAPP-PROGRAM/program/speakers", Collection.class);
+		return restTemplate.getForObject("http://EHFGAPP-PROGRAM/speakers", Collection.class);
 	}
 
 	@Override
@@ -54,12 +60,12 @@ class ProgramFacadeImpl implements ProgramFacade {
 
 	@Override
 	public void saveDays(List<ConferenceDayDTO> dayList) {
-		restTemplate.postForLocation("http://EHFGAPP-PROGRAM/conferencedays", dayList);
+		restTemplate.postForObject("http://EHFGAPP-PROGRAM/conferencedays", dayList, Collection.class);
 	}
 
 	@Override
 	public Collection<SessionDTO> findAllSessionsWithoutDayInformation() {
-		return restTemplate.getForObject("http://EHFGAPP-PROGRAM/program/sessions", Collection.class);
+		return restTemplate.getForObject("http://EHFGAPP-PROGRAM/sessions", Collection.class);
 	}
 
 	@Override

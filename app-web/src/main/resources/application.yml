@@ -1,7 +1,12 @@
+maintenance:
+  user: patrick
+  password: 123
+
+
 server.port: 8080
 
 eureka:
-  dashboard.path: eureka-dashboard
+  dashboard.path: eureka-dasbhoard
   instance:
     hostname: localhost
   client:
@@ -9,3 +14,12 @@ eureka:
       defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
   server:
     wait-time-in-ms-when-sync-empty: 30
+
+spring.thymeleaf:
+  cache: false
+  excludedViewNames: tweetExport
+
+# use this setting so the eureka dashboard will work with windows machine
+spring:
+  freemarker:
+    prefer-file-system-access: false
