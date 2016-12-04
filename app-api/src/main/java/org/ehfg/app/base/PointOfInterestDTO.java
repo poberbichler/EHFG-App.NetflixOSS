@@ -3,8 +3,6 @@ package org.ehfg.app.base;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.ehfg.app.rest.MapCategoryRepresentation;
 import org.ehfg.app.rest.PointOfInterestRepresentation;
-import org.ehfg.app.search.Indexable;
-import org.ehfg.app.search.ResultType;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -13,7 +11,7 @@ import javax.validation.constraints.NotNull;
  * @author patrick
  * @since 13.04.2014
  */
-public final class PointOfInterestDTO implements PointOfInterestRepresentation, Indexable {
+public final class PointOfInterestDTO implements PointOfInterestRepresentation {
 	private String id;
 
 	@NotNull
@@ -59,16 +57,6 @@ public final class PointOfInterestDTO implements PointOfInterestRepresentation, 
 	@Override
 	public String getId() {
 		return id;
-	}
-
-	@Override
-	public String getDisplayName() {
-		return name;
-	}
-
-	@Override
-	public ResultType getType() {
-		return ResultType.LOCATION;
 	}
 
 	public void setId(String id) {

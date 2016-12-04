@@ -19,6 +19,7 @@ import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.util.StringUtils;
+import org.springframework.web.client.AsyncRestTemplate;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -86,5 +87,11 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 		ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
 		messageSource.setBasename("versions");
 		return messageSource;
+	}
+
+	@Bean
+	public AsyncRestTemplate asyncRestTemplate() {
+		AsyncRestTemplate asyncRestTemplate = new AsyncRestTemplate();
+		return asyncRestTemplate;
 	}
 }

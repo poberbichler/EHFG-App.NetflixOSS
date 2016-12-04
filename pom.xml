@@ -16,7 +16,6 @@
         <module>app-api</module>
         <module>app-core</module>
         <module>app-web</module>
-        <module>app-mock</module>
     </modules>
 
     <properties>

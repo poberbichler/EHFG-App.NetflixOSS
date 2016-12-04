@@ -2,8 +2,6 @@ package org.ehfg.app.program;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.ehfg.app.rest.SessionRepresentation;
-import org.ehfg.app.search.Indexable;
-import org.ehfg.app.search.ResultType;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -19,7 +17,7 @@ import java.util.Set;
  * @author patrick
  * @since 03.2014
  */
-public final class SessionDTO implements SessionRepresentation, Indexable {
+public final class SessionDTO implements SessionRepresentation {
 	private String id;
 	private String name;
 	private String description;
@@ -92,16 +90,6 @@ public final class SessionDTO implements SessionRepresentation, Indexable {
 
 	public void setId(String id) {
 		this.id = id;
-	}
-
-	@Override
-	public String getDisplayName() {
-		return name;
-	}
-
-	@Override
-	public ResultType getType() {
-		return ResultType.SESSIONS;
 	}
 
 	public void setName(String name) {

@@ -13,5 +13,5 @@ public interface SearchService {
 	 */
 	SearchResultRepresentation findBy(String input);
 
-	boolean buildIndex();
+	void refreshIndex();
 }

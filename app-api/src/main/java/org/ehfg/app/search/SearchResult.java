@@ -6,7 +6,6 @@ import org.ehfg.app.rest.SearchResultRepresentation;
 import org.ehfg.app.twitter.TweetDTO;
 
 import java.util.Collection;
-import java.util.List;
 
 import static java.util.Collections.emptyList;
 
@@ -15,16 +14,16 @@ import static java.util.Collections.emptyList;
  * @since 06.2016
  */
 public class SearchResult implements SearchResultRepresentation {
-	private final List<TweetDTO> tweets;
-	private final List<SearchResultData> results;
+	private final Collection<TweetDTO> tweets;
+	private final Collection<SearchResultData> results;
 
 	public static SearchResult empty() {
 		return new SearchResult(null, null);
 	}
 
 	@JsonCreator
-	public SearchResult(@JsonProperty("tweets") List<TweetDTO> tweets,
-						@JsonProperty("results") List<SearchResultData> results) {
+	public SearchResult(@JsonProperty("tweets") Collection<TweetDTO> tweets,
+						@JsonProperty("results") Collection<SearchResultData> results) {
 		this.tweets = (tweets != null) ? tweets : emptyList();
 		this.results = (results != null) ? results : emptyList();
 	}
