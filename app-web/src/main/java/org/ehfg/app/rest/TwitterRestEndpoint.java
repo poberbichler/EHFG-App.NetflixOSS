@@ -1,24 +1,23 @@
 package org.ehfg.app.rest;
 
-import org.ehfg.app.twitter.TweetPageDTO;
 import org.ehfg.app.twitter.TwitterFacade;
 import org.ehfg.app.twitter.TwitterStreamStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * @author patrick
  * @since 04.2014
+ *
+ * @deprecated should be replaced by zuul
  */
+@Deprecated
 @RestController
-@RequestMapping("rest/twitter")
+@RequestMapping("api/twitter")
 public final class TwitterRestEndpoint {
     private final TwitterFacade twitterFacade;
 

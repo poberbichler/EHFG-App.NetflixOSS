@@ -8,6 +8,7 @@ import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
+import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.MediaType;
 import org.springframework.web.client.RestTemplate;
@@ -20,6 +21,7 @@ import org.springframework.web.client.RestTemplate;
  */
 @EnableEurekaServer
 @EnableEurekaClient
+@EnableZuulProxy
 @SpringBootApplication
 public class AppStarter extends SpringBootServletInitializer {
     public static void main(String[] args) throws Exception {

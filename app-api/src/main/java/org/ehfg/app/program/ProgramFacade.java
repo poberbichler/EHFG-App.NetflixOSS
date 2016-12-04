@@ -1,11 +1,7 @@
 package org.ehfg.app.program;
 
-import org.ehfg.app.rest.ConferenceDayRepresentation;
-
-import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author patrick
@@ -13,10 +9,6 @@ import java.util.Map;
  */
 public interface ProgramFacade {
 	Collection<SpeakerDTO> findAllSpeakers();
-
-	Collection<SpeakerDTO> findSpeakersWithSession();
-
-	Map<LocalDate, ? extends ConferenceDayRepresentation> findAllSessions();
 
 	List<ConferenceDayDTO> findDays();
 

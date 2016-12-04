@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 01.2015
  */
 @RestController
-@RequestMapping("rest/backdoor")
+@RequestMapping("api/backdoor")
 public final class BackdoorRestEndpoint {
 	private final MasterDataFacade masterDataFacade;
 

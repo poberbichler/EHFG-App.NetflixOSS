@@ -6,7 +6,7 @@ maintenance:
 server.port: 8080
 
 eureka:
-  dashboard.path: eureka-dasbhoard
+  dashboard.path: eureka-dashboard
   instance:
     hostname: localhost
   client:
@@ -23,3 +23,18 @@ spring.thymeleaf:
 spring:
   freemarker:
     prefer-file-system-access: false
+
+zuul:
+  prefix: /rest
+  routes:
+    sessions:
+      serviceId: ehfgapp-program
+      route: /sessions
+      strip-prefix: false
+    speakers:
+      serviceId: ehfgapp-program
+      route: /speakers
+      strip-prefix: false
+    internal:
+      path: /**
+      url: forward:/api

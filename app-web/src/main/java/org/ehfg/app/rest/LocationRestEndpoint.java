@@ -16,7 +16,7 @@ import java.util.Collection;
  * @since 07.2014
  */
 @RestController
-@RequestMapping("rest/locations")
+@RequestMapping("api/locations")
 public final class LocationRestEndpoint {
 	private final MasterDataFacade masterDataFacade;
 

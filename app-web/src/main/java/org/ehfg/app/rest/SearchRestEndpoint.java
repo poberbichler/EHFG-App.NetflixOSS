@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 06.2016
  */
 @RestController
-@RequestMapping("rest/search")
+@RequestMapping("api/search")
 public class SearchRestEndpoint {
 	private final SearchService searchService;
 

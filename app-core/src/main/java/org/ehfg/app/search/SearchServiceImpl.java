@@ -47,11 +47,13 @@ public class SearchServiceImpl implements SearchService {
 			ResponseEntity<SearchResult> twitterResultEntity = twitterFuture.get(5L, TimeUnit.SECONDS);
 			ResponseEntity<Map<ResultType, List<SearchResultItem>>> programResultEntity = programFuture.get(5L, TimeUnit.SECONDS);
 
-			List<SearchResult.SearchResultData> data = new ArrayList<>();
+
+			List<SearchResult.SearchResultData> programData = new ArrayList<>();
 			for (Map.Entry<ResultType, List<SearchResultItem>> entry : programResultEntity.getBody().entrySet()) {
-				data.add(new SearchResult.SearchResultData(entry.getKey(), entry.getValue()));
+				programData.add(new SearchResult.SearchResultData(entry.getKey(), entry.getValue()));
 			}
-			return new SearchResult(twitterResultEntity.getBody().getTweets(), data);
+
+			return new SearchResult(twitterResultEntity.getBody().getTweets(), programData);
 		} catch (InterruptedException | ExecutionException | TimeoutException e) {
 			logger.error("an exception occured when searching for [{}]", input, e);
 			return SearchResult.empty();

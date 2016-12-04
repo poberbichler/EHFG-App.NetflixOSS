@@ -14,7 +14,7 @@ import java.util.Collection;
  * @since 08.2016
  */
 @RestController
-@RequestMapping("rest/mapcategories")
+@RequestMapping("api/mapcategories")
 public class MapCategoryRestEndpoint {
     private final MasterDataFacade masterDataFacade;
 
