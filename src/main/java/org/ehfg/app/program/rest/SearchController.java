@@ -1,12 +1,15 @@
 package org.ehfg.app.program.rest;
 
-import org.ehfg.app.program.search.SearchResult;
+import org.ehfg.app.program.search.ResultType;
+import org.ehfg.app.program.search.SearchResultItem;
 import org.ehfg.app.program.search.SearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -24,8 +27,8 @@ public class SearchController {
 	}
 
 	@GetMapping({"{input}", "{input}/{maxResults}"})
-	public SearchResult getSearchResult(@PathVariable("input") String input,
-			@PathVariable(name = "maxResults") Optional<Integer> maxResults) {
+	public Map<ResultType, List<SearchResultItem>> getSearchResult(@PathVariable("input") String input,
+		@PathVariable(name = "maxResults") Optional<Integer> maxResults) {
 
 		return searchService.search(input, maxResults.orElse(50));
 	}

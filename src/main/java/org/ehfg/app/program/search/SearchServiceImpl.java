@@ -22,8 +22,10 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.io.StringReader;
+import java.util.*;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+import static java.util.Collections.emptyMap;
 
 /**
  * @author patrick
@@ -43,7 +45,7 @@ class SearchServiceImpl implements SearchService {
 	}
 
 	@Override
-	public SearchResult search(String input, int maxResults) {
+	public Map<ResultType, List<SearchResultItem>> search(String input, int maxResults) {
 		logger.info("searching for [{}]", input);
 		checkNotNull(input, "input must not be null");
 
@@ -51,19 +53,23 @@ class SearchServiceImpl implements SearchService {
 			DirectoryReader directoryReader = StandardDirectoryReader.open(index);
 			IndexSearcher indexSearcher = new IndexSearcher(directoryReader);
 
-			final SearchResult result = new SearchResult();
+			Map<ResultType, List<SearchResultItem>> result = new EnumMap<>(ResultType.class);
+			for (ResultType type : ResultType.values()) {
+				result.putIfAbsent(type, new LinkedList<>());
+			}
 
 			TopDocs search = indexSearcher.search(new TermQuery(new Term("content", input)), maxResults);
 			logger.debug("found [{}] results for input [{}]", search.scoreDocs.length, input);
 			for (ScoreDoc scoreDoc : search.scoreDocs) {
 				Document doc = indexSearcher.doc(scoreDoc.doc);
-				result.addItem(new SearchResultItem(doc.get("id"), ResultType.valueOf(doc.get("type")), doc.get("name")));
+				ResultType type = ResultType.valueOf(doc.get("type"));
+				result.get(type).add(new SearchResultItem(doc.get("id"), type, doc.get("name")));
 			}
 
 			return result;
 		} catch (IOException e) {
 			logger.error("this IOException should never happen, we are not doing any I/O", e);
-			return new SearchResult();
+			return emptyMap();
 		}
 	}
 
@@ -111,7 +117,7 @@ class SearchServiceImpl implements SearchService {
 		Document result = new Document();
 		result.add(new TextField("content", new StringReader(session.getDescription())));
 		result.add(new TextField("name", session.getName(), Field.Store.YES));
-		result.add(new StringField("type", ResultType.SESSION.name(), Field.Store.YES));
+		result.add(new StringField("type", ResultType.SESSIONS.name(), Field.Store.YES));
 		result.add(new StringField("id", session.getId(), Field.Store.YES));
 		return result;
 	}

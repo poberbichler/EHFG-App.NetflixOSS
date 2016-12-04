@@ -6,5 +6,5 @@ package org.ehfg.app.program.search;
  */
 public enum ResultType {
 	SPEAKER,
-	SESSION;
+	SESSIONS;
 }

@@ -7,12 +7,12 @@ package org.ehfg.app.program.search;
 public class SearchResultItem {
 	private final String id;
 	private final ResultType type;
-	private final String name;
+	private final String description;
 
-	public SearchResultItem(String id, ResultType type, String name) {
+	public SearchResultItem(String id, ResultType type, String description) {
 		this.id = id;
 		this.type = type;
-		this.name = name;
+		this.description = description;
 	}
 
 	public String getId() {
@@ -23,7 +23,7 @@ public class SearchResultItem {
 		return type;
 	}
 
-	public String getName() {
-		return name;
+	public String getDescription() {
+		return description;
 	}
 }

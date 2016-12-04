@@ -1,7 +1,6 @@
 package org.ehfg.app.program.rest;
 
 import org.ehfg.app.program.search.ResultType;
-import org.ehfg.app.program.search.SearchResult;
 import org.ehfg.app.program.search.SearchResultItem;
 import org.ehfg.app.program.search.SearchService;
 import org.junit.BeforeClass;
@@ -13,6 +12,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
@@ -43,8 +44,8 @@ public class SearchControllerTest {
 	public void getSearchResultWithDefaultValue() throws Exception {
 		String searchInput = "loremipsum";
 
-		given(searchService.search(searchInput, 50)).willReturn(new SearchResult()
-				.addItem(new SearchResultItem("id", ResultType.SESSION, "name")));
+		MultiValueMap<ResultType, SearchResultItem> resultMap = createResultMap();
+		given(searchService.search(searchInput, 50)).willReturn(resultMap);
 
 		mockMvc.perform(get("/search/{input}/", searchInput))
 				.andExpect(status().isOk())
@@ -53,13 +54,18 @@ public class SearchControllerTest {
 		verify(searchService).search(searchInput, 50);
 	}
 
+	private MultiValueMap<ResultType, SearchResultItem> createResultMap() {
+		MultiValueMap<ResultType, SearchResultItem> resultMap = new LinkedMultiValueMap<>();
+		resultMap.add(ResultType.SESSIONS, new SearchResultItem("id", ResultType.SESSIONS, "name"));
+		return resultMap;
+	}
+
 	@Test
 	public void overrideSearchResultAmount() throws Exception {
 		String searchInput = "input";
 		int maxResults = 100;
 
-		given(searchService.search(searchInput, maxResults)).willReturn(new SearchResult()
-				.addItem(new SearchResultItem("id", ResultType.SESSION, "name")));
+		given(searchService.search(searchInput, maxResults)).willReturn(createResultMap());
 
 		mockMvc.perform(get("/search/{input}/{maxResults}", searchInput, maxResults))
 				.andExpect(status().isOk())

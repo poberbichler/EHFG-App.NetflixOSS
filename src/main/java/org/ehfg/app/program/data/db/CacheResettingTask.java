@@ -1,11 +1,11 @@
 package org.ehfg.app.program.data.db;
 
+import org.ehfg.app.program.search.SearchService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -24,13 +24,15 @@ class CacheResettingTask {
 	private final SessionRepository sessionRepository;
 	private final SpeakerRepository speakerRepository;
 
-	private ApplicationEventPublisher publisher;
+	private final SearchService searchService;
 
 	@Autowired
-	public CacheResettingTask(CacheManager cacheManager, SessionRepository sessionRepository, SpeakerRepository speakerRepository) {
+	public CacheResettingTask(CacheManager cacheManager, SessionRepository sessionRepository, SpeakerRepository speakerRepository,
+							  SearchService searchService) {
 		this.cacheManager = cacheManager;
 		this.sessionRepository = sessionRepository;
 		this.speakerRepository = speakerRepository;
+		this.searchService = searchService;
 	}
 
 	@Scheduled(fixedRate = 1000 * 60 * 60) // hourly
@@ -44,5 +46,7 @@ class CacheResettingTask {
 
 		sessionRepository.findAll();
 		speakerRepository.findAll();
+
+		searchService.updateIndex();
 	}
 }
