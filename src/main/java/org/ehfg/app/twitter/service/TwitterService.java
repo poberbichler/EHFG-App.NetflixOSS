@@ -18,4 +18,8 @@ public interface TwitterService {
 	TweetPage findPage(Hashtag hashtag, int pageCounter, int size);
 
 	Collection<Tweet> findForIndex();
+
+	TweetPage findPage(int pageCounter, int size);
+
+	Collection<? extends TweetRepresentation> findNewerTweets(LocalDateTime timestamp);
 }

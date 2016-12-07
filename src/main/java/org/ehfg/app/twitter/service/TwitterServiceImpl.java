@@ -19,7 +19,7 @@ import java.util.Collection;
  */
 @Service
 class TwitterServiceImpl implements TwitterService {
-	private static final Sort CREATION_DATE = new Sort(new Sort.Order(Sort.Direction.DESC, "creationDate"));
+	private static final Sort ORDER_BY_CREATION_DATE = new Sort(new Sort.Order(Sort.Direction.DESC, "creationDate"));
 
 	private final TweetRepository tweetRepository;
 
@@ -31,7 +31,7 @@ class TwitterServiceImpl implements TwitterService {
 
 	@Override
 	public Collection<? extends TweetRepresentation> findNewerTweets(Hashtag hashtag, LocalDateTime lastTweetTimestamp) {
-		return tweetRepository.findNewerTweetsByHashtag(hashtag.getHashtagForDb(), lastTweetTimestamp, CREATION_DATE);
+		return tweetRepository.findNewerTweetsByHashtag(hashtag.getHashtagForDb(), lastTweetTimestamp, ORDER_BY_CREATION_DATE);
 	}
 
 	@Override
@@ -43,5 +43,17 @@ class TwitterServiceImpl implements TwitterService {
 	@Override
 	public Collection<Tweet> findForIndex() {
 		return tweetRepository.findAll(new PageRequest(0, 250)).getContent();
+	}
+
+	@Override
+	public TweetPage findPage(int pageCounter, int size) {
+		Page<Tweet> page = tweetRepository.findAll(new PageRequest(pageCounter, size, ORDER_BY_CREATION_DATE));
+		return new TweetPage(page, page.getContent().get(0).getHashtag());
+	}
+
+	@Override
+	public Collection<? extends TweetRepresentation> findNewerTweets(LocalDateTime timestamp) {
+		return tweetRepository.findNewerTweets(timestamp, ORDER_BY_CREATION_DATE);
+
 	}
 }

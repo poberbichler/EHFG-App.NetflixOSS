@@ -9,6 +9,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -19,5 +20,9 @@ public interface TweetRepository extends MongoRepository<Tweet, String> {
 	@Query("{hashtag: ?0, creationDate: {$gt: ?1}}")
 	List<Tweet> findNewerTweetsByHashtag(String hashtag, LocalDateTime lastTweet, Sort sort);
 
-	Page<? extends TweetRepresentation> findByHashtagOrderByCreationDateDesc(String hashtagForDb, Pageable pageRequest);
+	@Query("{creationDate: {$gt: ?1}}")
+	Collection<? extends TweetRepresentation> findNewerTweets(LocalDateTime timestamp, Sort sort);
+
+	Page<Tweet> findByHashtagOrderByCreationDateDesc(String hashtagForDb, Pageable pageRequest);
+
 }

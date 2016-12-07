@@ -5,14 +5,11 @@ import org.ehfg.app.twitter.data.TweetPage;
 import org.ehfg.app.twitter.data.TweetRepresentation;
 import org.ehfg.app.twitter.service.TwitterService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.Optional;
 
 /**
  * @author patrick
@@ -28,13 +25,25 @@ public class TweetController {
         this.twitterService = twitterService;
     }
 
-    @GetMapping("{hashtag}/{timestamp}")
-    public Collection<? extends TweetRepresentation> findNewer(@PathVariable("hashtag") Hashtag hashtag, @PathVariable("timestamp") LocalDateTime lastTweet) {
-        return twitterService.findNewerTweets(hashtag, lastTweet);
-    }
+    @GetMapping("page/{pageCounter}")
+	public TweetPage getPage(@PathVariable("pageCounter") int pageCounter,
+							 @RequestParam(name = "size", required = false, defaultValue = "25") int pageSize,
+							 @RequestParam(name="hashtag", required = false) Optional<Hashtag> hashtag) {
 
-    @GetMapping("{hashtag}/page/{pageCounter}/{size}")
-    public TweetPage getPage(@PathVariable("hashtag") Hashtag hashtag, @PathVariable("pageCounter") int pageCounter, @PathVariable("size") int size) {
-        return twitterService.findPage(hashtag, pageCounter, size);
-    }
+		if (hashtag.isPresent()) {
+			return twitterService.findPage(hashtag.get(), pageCounter, pageSize);
+		}
+		return twitterService.findPage(pageCounter, pageSize);
+	}
+
+	@GetMapping("update/{timestamp}")
+	public Collection<? extends TweetRepresentation> findNewer(@PathVariable("timestamp") LocalDateTime timestamp,
+															   @RequestParam(name = "hashtag", required = false) Optional<Hashtag> hashtag) {
+
+		if (hashtag.isPresent()) {
+			return twitterService.findNewerTweets(hashtag.get(), timestamp);
+		}
+
+ 		return twitterService.findNewerTweets(timestamp);
+	}
 }
