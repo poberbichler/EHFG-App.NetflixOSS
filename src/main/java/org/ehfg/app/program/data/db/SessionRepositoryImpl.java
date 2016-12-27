@@ -13,11 +13,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
+import static java.util.Collections.emptySet;
 import static java.util.stream.Collectors.*;
 
 /**
@@ -82,7 +80,7 @@ class SessionRepositoryImpl implements SessionRepository {
 				.setName(eventName)
 				.setCode(event.getCode())
 				.setStartTime(event.getDay().atTime(event.getStart()))
-				.setSpeakers(speakerMap.get(event.getId()));
+				.setSpeakers(speakerMap.getOrDefault(event.getId(), emptySet()));
 
 	}
 

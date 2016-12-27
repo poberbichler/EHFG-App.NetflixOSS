@@ -3,7 +3,6 @@ package org.ehfg.app.program.data.retrieval;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
-import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import javax.xml.bind.JAXBContext;
@@ -39,7 +38,7 @@ public abstract class AbstractDataRetrievalStrategy<T> {
 
 	public T fetchData() {
 		try {
-			logger.info("fetching data from {}", dataResource.getURL().getPath());
+			logger.info("fetching data from {}", dataResource.getURL());
 
 			Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
 			Object data = unmarshaller.unmarshal(dataResource.getInputStream());
