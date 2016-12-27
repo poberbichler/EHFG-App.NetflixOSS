@@ -69,12 +69,7 @@ class TwitterFacadeImpl implements TwitterFacade {
 
 	@Override
 	public Object findTweetPageWithSize(int pageId, int pageSize) {
-		Validate.notNull(pageId, "pageId must not be null!");
-		Validate.notNull(pageSize, "pageSize must not be null!");
-
-		String currentHashtag = findHashtag().substring(1);
-
-		return restTemplate.getForObject(TWITTER_URL + "/tweets/{hashtag}/page/{pageCounter}/{size}", Object.class, currentHashtag, pageId, pageSize);
+		return restTemplate.getForObject(TWITTER_URL + "/tweets/page/{pageCounter}?size={pageSize}", Object.class, pageId, pageSize);
 	}
 
 

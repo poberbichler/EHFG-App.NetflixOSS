@@ -1,5 +1,6 @@
 package org.ehfg.app.config;
 
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
@@ -16,7 +17,7 @@ import java.io.IOException;
  * @author patrick
  * @since 04.2015
  */
-//@Component
+@Component
 class SimpleCorsFilter extends OncePerRequestFilter {
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {

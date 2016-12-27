@@ -24,7 +24,6 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
 
         <commons-lang.version>3.4</commons-lang.version>
-        <commons-collections.version>4.0</commons-collections.version>
         <validation.version>1.1.0.Final</validation.version>
         <jsoup.version>1.8.2</jsoup.version>
         <el-impl.version>2.2</el-impl.version>
@@ -89,12 +88,6 @@
                 <groupId>org.webjars</groupId>
                 <artifactId>bootstrap</artifactId>
                 <version>${bootstrap.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.apache.commons</groupId>
-                <artifactId>commons-collections4</artifactId>
-                <version>${commons-collections.version}</version>
             </dependency>
 
             <dependency>

@@ -35,6 +35,10 @@ zuul:
       serviceId: ehfgapp-program
       route: /speakers
       strip-prefix: false
+    program:
+      serviceId: ehfgapp-program
+      route: /program
+      strip-prefix: false
     internal:
       path: /**
       url: forward:/api
