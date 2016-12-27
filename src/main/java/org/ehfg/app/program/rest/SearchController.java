@@ -5,6 +5,7 @@ import org.ehfg.app.program.search.SearchResultItem;
 import org.ehfg.app.program.search.SearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +20,8 @@ import java.util.Optional;
 @RestController
 @RequestMapping("search")
 public class SearchController {
+	public static final int DEFAULT_MAX_SEARCH_RESULTS = 50;
+
 	private final SearchService searchService;
 
 	@Autowired
@@ -30,7 +33,7 @@ public class SearchController {
 	public Map<ResultType, List<SearchResultItem>> getSearchResult(@PathVariable("input") String input,
 		@PathVariable(name = "maxResults") Optional<Integer> maxResults) {
 
-		return searchService.search(input, maxResults.orElse(50));
+		return searchService.search(input, maxResults.orElse(DEFAULT_MAX_SEARCH_RESULTS));
 	}
 
 	@PostMapping

@@ -45,13 +45,13 @@ public class SearchControllerTest {
 		String searchInput = "loremipsum";
 
 		MultiValueMap<ResultType, SearchResultItem> resultMap = createResultMap();
-		given(searchService.search(searchInput, 50)).willReturn(resultMap);
+		given(searchService.search(searchInput, SearchController.DEFAULT_MAX_SEARCH_RESULTS)).willReturn(resultMap);
 
-		mockMvc.perform(get("/search/{input}/", searchInput))
+		mockMvc.perform(get("/search/{input}/", searchInput).accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8));
 
-		verify(searchService).search(searchInput, 50);
+		verify(searchService).search(searchInput, SearchController.DEFAULT_MAX_SEARCH_RESULTS);
 	}
 
 	private MultiValueMap<ResultType, SearchResultItem> createResultMap() {
@@ -63,11 +63,11 @@ public class SearchControllerTest {
 	@Test
 	public void overrideSearchResultAmount() throws Exception {
 		String searchInput = "input";
-		int maxResults = 100;
+		int maxResults = SearchController.DEFAULT_MAX_SEARCH_RESULTS + 1;
 
 		given(searchService.search(searchInput, maxResults)).willReturn(createResultMap());
 
-		mockMvc.perform(get("/search/{input}/{maxResults}", searchInput, maxResults))
+		mockMvc.perform(get("/search/{input}/{maxResults}", searchInput, maxResults).accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8));
 
