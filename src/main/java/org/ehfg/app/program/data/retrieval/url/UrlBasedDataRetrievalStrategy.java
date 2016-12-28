@@ -17,7 +17,7 @@ import java.net.MalformedURLException;
  */
 @Service
 @ConditionalOnProperty(name = "program.from.classpath", matchIfMissing = true, havingValue = "false")
-abstract class UrlBasedDataRetrievalStrategy<T> extends AbstractDataRetrievalStrategy<T> {
+public abstract class UrlBasedDataRetrievalStrategy<T> extends AbstractDataRetrievalStrategy<T> {
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 	private static final String URL_DELIMITER = "/";
 

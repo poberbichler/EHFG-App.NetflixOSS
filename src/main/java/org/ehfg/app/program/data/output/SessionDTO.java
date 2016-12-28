@@ -1,5 +1,7 @@
 package org.ehfg.app.program.data.output;
 
+import com.google.common.base.MoreObjects;
+
 import java.time.LocalDateTime;
 import java.util.Set;
 
@@ -98,5 +100,16 @@ public class SessionDTO implements SessionRepresentation {
 	@Override
 	public Set<String> getSpeakers() {
 		return speakers;
+	}
+
+	@Override
+	public String toString() {
+		return MoreObjects.toStringHelper(this)
+				.add("name", name)
+				.add("code", code)
+				.add("startTime", startTime)
+				.add("endTime", endTime)
+				.add("location", location)
+				.toString();
 	}
 }

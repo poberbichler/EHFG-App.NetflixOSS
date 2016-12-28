@@ -23,6 +23,8 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.*;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static java.util.Collections.emptyMap;
@@ -39,6 +41,8 @@ class SearchServiceImpl implements SearchService {
 
 	private Directory index = new RAMDirectory();
 
+	private final ReadWriteLock lock = new ReentrantReadWriteLock();
+
 	@Autowired
 	public SearchServiceImpl(ProgramService programService) {
 		this.programService = programService;
@@ -50,6 +54,8 @@ class SearchServiceImpl implements SearchService {
 		checkNotNull(input, "input must not be null");
 
 		try {
+			lock.readLock().lock();
+
 			DirectoryReader directoryReader = StandardDirectoryReader.open(index);
 			IndexSearcher indexSearcher = new IndexSearcher(directoryReader);
 
@@ -71,12 +77,18 @@ class SearchServiceImpl implements SearchService {
 			logger.error("this IOException should never happen, we are not doing any I/O", e);
 			return emptyMap();
 		}
+
+		finally {
+			lock.readLock().unlock();
+		}
 	}
 
 	@Override
 	public boolean updateIndex() {
-		logger.info("updating index...");
+		logger.info("updating index, applying lock now...");
+
 		try {
+			lock.writeLock().lock();
 			if (index != null) {
 				index.close();
 			}
@@ -101,6 +113,11 @@ class SearchServiceImpl implements SearchService {
 		} catch (IOException e) {
 			logger.error("this IOException should never happen, we are not doing any I/O", e);
 			return false;
+		}
+
+		finally {
+			logger.info("unlocking...");
+			lock.writeLock().unlock();
 		}
 	}
 

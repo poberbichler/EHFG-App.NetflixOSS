@@ -39,7 +39,7 @@ class CacheResettingTask {
 	public void resetCaches() {
 		logger.info("going to clean every cache");
 
-		for (final String cacheName : cacheManager.getCacheNames()) {
+		for (String cacheName : cacheManager.getCacheNames()) {
 			logger.debug("cleaning cache [{}]", cacheName);
 			cacheManager.getCache(cacheName).clear();
 		}

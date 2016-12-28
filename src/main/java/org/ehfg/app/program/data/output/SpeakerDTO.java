@@ -1,5 +1,7 @@
 package org.ehfg.app.program.data.output;
 
+import com.google.common.base.MoreObjects;
+
 import java.util.Comparator;
 
 /**
@@ -49,5 +51,14 @@ public class SpeakerDTO implements SpeakerRepresentation, Comparable<SpeakerDTO>
 	@Override
 	public int compareTo(SpeakerDTO that) {
 		return Comparator.comparing(SpeakerDTO::getFullName).compare(this, that);
+	}
+
+	@Override
+	public String toString() {
+		return MoreObjects.toStringHelper(this)
+				.add("id", id)
+				.add("firstName", firstName)
+				.add("lastName", lastName)
+				.toString();
 	}
 }
