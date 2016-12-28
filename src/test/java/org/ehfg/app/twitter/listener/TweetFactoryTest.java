@@ -1,5 +1,13 @@
 package org.ehfg.app.twitter.listener;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.when;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Date;
+
 import org.ehfg.app.twitter.data.Tweet;
 import org.ehfg.app.twitter.data.TwitterUser;
 import org.junit.Before;
@@ -7,15 +15,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.social.twitter.api.*;
-
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Date;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.when;
+import org.springframework.social.twitter.api.Entities;
+import org.springframework.social.twitter.api.UrlEntity;
 
 @RunWith(MockitoJUnitRunner.class)
 public final class TweetFactoryTest {
@@ -34,9 +35,9 @@ public final class TweetFactoryTest {
 		UrlEntity urlEntity = new UrlEntity("app.ehfg.org/123", "https://app.ehfg.org/123", "http://t.co/IyExg1bi61", null);
 		Entities entities = new Entities(
 				Arrays.asList(urlEntity),
-				Collections.<HashTagEntity>emptyList(),
-				Collections.<MentionEntity>emptyList(),
-				Collections.<MediaEntity>emptyList());
+				Collections.emptyList(),
+				Collections.emptyList(),
+				Collections.emptyList());
 
 		when(status.getEntities()).thenReturn(entities);
 		when(status.getCreatedAt()).thenReturn(new Date());
