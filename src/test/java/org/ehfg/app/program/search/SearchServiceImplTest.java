@@ -2,6 +2,7 @@ package org.ehfg.app.program.search;
 
 import org.assertj.core.api.Assertions;
 import org.ehfg.app.program.days.ConferenceDayService;
+import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,9 +11,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
+import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
@@ -59,5 +63,14 @@ public class SearchServiceImplTest {
 		assertThat(result).hasSize(2);
 		assertThat(result.get(ResultType.SESSIONS)).isEmpty();
 		assertThat(result.get(ResultType.SPEAKER)).isEmpty();
+	}
+
+	@Test
+	public void maxResultShouldLimitResults() {
+		Map<ResultType, List<SearchResultItem>> result = searchService.search("helmut", 1);
+
+		assertThat(result).hasSize(2);
+		List<SearchResultItem> flatResult = result.values().stream().flatMap(Collection::stream).collect(toList());
+		assertThat(flatResult).hasSize(1);
 	}
 }
