@@ -12,6 +12,8 @@ import org.slf4j.LoggerFactory;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
+import static org.apache.commons.lang.StringUtils.removeStart;
+
 /**
  * helper class to remove unnecessary html text from the ehfg server
  * 
@@ -26,14 +28,13 @@ class EscapeUtils {
 	}
 
 	/**
-	 * utility function to removed unnecessary html from the input text <br>
-	 * first, every {@code &nbsp;} will be removed, and
-	 * {@link StringEscapeUtils#unescapeHtml4(String)} will be called<br>
-	 * after that, every image tag will be removed, as well as every empty
-	 * paragraph <br>
-	 * at last, every snippet of <code>style="font-family: ..."</code> will be
-	 * removed
-	 * 
+	 * utility function to removed unnecessary html from the input text. The follow actions will be done:
+	 * <ol>
+	 *     <li>every {@code &nbsp;} will be removed, and {@link StringEscapeUtils#unescapeHtml4(String)} will be called
+	 *     <li>every image tag will be removed, as well as every empty paragraph
+	 *     <li>every snippet of {@code style="font-family: ..."} will be removed
+	 * </ol>
+	 *
 	 * @param inputText
 	 *            to be escaped
 	 * @return unescaped version of the text
@@ -62,7 +63,17 @@ class EscapeUtils {
 				.filter(element -> element.text().trim().isEmpty())
 				.forEach(Element::remove);
 
-		return document.body().html();
+		String result = document.body().html();
+
+		result = EscapeUtils.escapeLinks(result);
+		result = removeStart(result, "<p> ");
+		result = removeStart(result, "<strong>");
+		result = removeStart(result, ".");
+		result = removeStart(result, "<br>");
+		result = removeStart(result, "<br/>");
+		result = removeStart(result, "<br />");
+		result = removeStart(result, "<br></br>");
+		return result;
 	}
 
 	static String escapeLinks(String inputText) {

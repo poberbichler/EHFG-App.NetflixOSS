@@ -19,6 +19,7 @@ import java.net.MalformedURLException;
 @ConditionalOnProperty(name = "program.from.classpath", matchIfMissing = true, havingValue = "false")
 public abstract class UrlBasedDataRetrievalStrategy<T> extends AbstractDataRetrievalStrategy<T> {
 	private final Logger logger = LoggerFactory.getLogger(getClass());
+
 	private static final String URL_DELIMITER = "/";
 
 	@Value("${rss.base.url}")
