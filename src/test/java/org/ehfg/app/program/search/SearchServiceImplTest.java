@@ -1,8 +1,6 @@
 package org.ehfg.app.program.search;
 
-import org.assertj.core.api.Assertions;
 import org.ehfg.app.program.days.ConferenceDayService;
-import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,7 +12,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
