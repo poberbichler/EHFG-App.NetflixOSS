@@ -29,7 +29,7 @@ zuul:
   routes:
     sessions:
       serviceId: ehfgapp-program
-      route: /sessions
+      route: /program
       strip-prefix: false
     speakers:
       serviceId: ehfgapp-program
