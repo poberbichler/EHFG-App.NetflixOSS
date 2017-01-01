@@ -1,10 +1,7 @@
 package org.ehfg.app.config;
 
 import com.fasterxml.jackson.module.jaxb.JaxbAnnotationModule;
-import org.ehfg.app.converter.LocalDateTimeToUTCTimestampSerializer;
-import org.ehfg.app.converter.LocalDateToStringConverter;
-import org.ehfg.app.converter.LongToLocalDateTimeConverter;
-import org.ehfg.app.converter.StringToLocalDateConverter;
+import org.ehfg.app.converter.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -20,12 +17,10 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.util.StringUtils;
 import org.springframework.web.client.AsyncRestTemplate;
-import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-import org.springframework.web.servlet.view.BeanNameViewResolver;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -70,7 +65,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 
 	@Override
 	public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
-		final Jackson2ObjectMapperBuilder builder = new Jackson2ObjectMapperBuilder();
+		Jackson2ObjectMapperBuilder builder = new Jackson2ObjectMapperBuilder();
 		builder.indentOutput(true).modulesToInstall(new JaxbAnnotationModule());
 		builder.serializerByType(LocalDateTime.class, new LocalDateTimeToUTCTimestampSerializer());
 

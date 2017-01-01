@@ -3,7 +3,6 @@ package org.ehfg.app.search;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.ehfg.app.rest.SearchResultItemRepresentation;
 
 /**
  * @author patrick

@@ -2,7 +2,6 @@ package org.ehfg.app.search;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.ehfg.app.rest.SearchResultRepresentation;
 import org.ehfg.app.twitter.TweetDTO;
 
 import java.util.Collection;

@@ -1,12 +1,14 @@
 package org.ehfg.app.program;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestOperations;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -27,12 +29,6 @@ class ProgramFacadeImpl implements ProgramFacade {
 		return restTemplate.getForObject("http://EHFGAPP-PROGRAM/speakers", Collection.class);
 	}
 
-	private Set<String> findEverySpeakerForSession() {
-		return findAllSessionsWithoutDayInformation().stream()
-				.flatMap(session -> session.getSpeakers().stream())
-				.collect(Collectors.toSet());
-	}
-
 	@Override
 	public List<ConferenceDayDTO> findDays() {
 		return restTemplate.getForObject("http://EHFGAPP-PROGRAM/conferencedays", List.class);
@@ -45,7 +41,13 @@ class ProgramFacadeImpl implements ProgramFacade {
 
 	@Override
 	public Collection<SessionDTO> findAllSessionsWithoutDayInformation() {
-		return restTemplate.getForObject("http://EHFGAPP-PROGRAM/sessions", Collection.class);
+		ParameterizedTypeReference<Collection<SessionDTO>> responseType = new ParameterizedTypeReference<Collection<SessionDTO>>() {
+		};
+
+		ResponseEntity<Collection<SessionDTO>> exchange = restTemplate.exchange("http://EHFGAPP-PROGRAM/sessions", HttpMethod.GET, null, responseType);
+
+		Collection<SessionDTO> responseBody = exchange.getBody();
+		return responseBody;
 	}
 
 	@Override

@@ -1,6 +1,5 @@
 package org.ehfg.app.search;
 
-import org.ehfg.app.rest.SearchResultRepresentation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +22,7 @@ import java.util.concurrent.TimeoutException;
  * @since 06.2016
  */
 @Service
-public class SearchServiceImpl implements SearchService {
+class SearchServiceImpl implements SearchService {
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 
 	private final AsyncRestTemplate asyncRestTemplate;

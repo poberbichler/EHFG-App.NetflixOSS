@@ -1,8 +1,5 @@
-package org.ehfg.app.rest;
+package org.ehfg.app.search;
 
-import org.ehfg.app.search.ResultType;
-import org.ehfg.app.search.SearchResult;
-import org.ehfg.app.search.SearchResultItem;
 import org.ehfg.app.twitter.TweetDTO;
 
 import javax.xml.bind.annotation.XmlAccessType;

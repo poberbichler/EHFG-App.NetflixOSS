@@ -1,6 +1,4 @@
-package org.ehfg.app.rest;
-
-import org.ehfg.app.search.ResultType;
+package org.ehfg.app.search;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;

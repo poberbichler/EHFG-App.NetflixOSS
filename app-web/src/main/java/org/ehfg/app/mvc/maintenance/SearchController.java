@@ -1,6 +1,6 @@
 package org.ehfg.app.mvc.maintenance;
 
-import org.ehfg.app.rest.SearchResultRepresentation;
+import org.ehfg.app.search.SearchResultRepresentation;
 import org.ehfg.app.search.SearchResult;
 import org.ehfg.app.search.SearchService;
 import org.springframework.beans.factory.annotation.Autowired;

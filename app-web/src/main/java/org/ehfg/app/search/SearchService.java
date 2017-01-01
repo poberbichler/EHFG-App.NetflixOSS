@@ -1,7 +1,5 @@
 package org.ehfg.app.search;
 
-import org.ehfg.app.rest.SearchResultRepresentation;
-
 /**
  * @author patrick
  * @since 06.2016

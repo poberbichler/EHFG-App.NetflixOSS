@@ -1,5 +1,6 @@
 package org.ehfg.app.rest;
 
+import org.ehfg.app.search.SearchResultRepresentation;
 import org.ehfg.app.search.SearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
