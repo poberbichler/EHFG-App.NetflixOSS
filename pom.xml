@@ -13,8 +13,6 @@
 
     <packaging>pom</packaging>
     <modules>
-        <module>app-api</module>
-        <module>app-core</module>
         <module>app-web</module>
     </modules>
 
@@ -51,18 +49,6 @@
             <dependency>
                 <groupId>org.ehfg</groupId>
                 <artifactId>app-api</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.ehfg</groupId>
-                <artifactId>app-core</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.ehfg</groupId>
-                <artifactId>app-mock</artifactId>
                 <version>${project.version}</version>
             </dependency>
 

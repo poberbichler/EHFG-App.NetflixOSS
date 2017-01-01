@@ -1,7 +1,7 @@
 package org.ehfg.app.mvc.maintenance;
 
-import org.ehfg.app.base.MasterDataFacade;
-import org.ehfg.app.base.PointOfInterestDTO;
+import org.ehfg.app.base.dto.MasterDataFacade;
+import org.ehfg.app.base.dto.PointOfInterestDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;

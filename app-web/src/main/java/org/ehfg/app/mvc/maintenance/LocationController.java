@@ -1,7 +1,7 @@
 package org.ehfg.app.mvc.maintenance;
 
-import org.ehfg.app.base.LocationDTO;
-import org.ehfg.app.base.MasterDataFacade;
+import org.ehfg.app.base.dto.LocationDTO;
+import org.ehfg.app.base.dto.MasterDataFacade;
 import org.ehfg.app.program.ProgramFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
