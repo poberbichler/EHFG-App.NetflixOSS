@@ -6,7 +6,9 @@ import org.ehfg.app.rest.MapCategoryRepresentation;
 /**
  * @author poberbichler
  * @since 08.2016
+ * @deprecated use {@link org.ehfg.app.base.MapCategory} instead
  */
+@Deprecated
 public class MapCategoryDTO implements MapCategoryRepresentation {
     private String id;
     private String name;

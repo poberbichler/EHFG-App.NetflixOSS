@@ -1,6 +1,7 @@
 package org.ehfg.app.base.dto;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.ehfg.app.base.Coordinate;
 import org.ehfg.app.base.LocationMappingValid;
 import org.ehfg.app.base.PointOfInterest;
 import org.ehfg.app.rest.LocationRepresentation;
@@ -12,29 +13,30 @@ import javax.validation.constraints.NotNull;
  * 
  * @author patrick
  * @since 03.2014
+ * @deprecated use {@link org.ehfg.app.base.Location} instead
  */
+@Deprecated
 @LocationMappingValid
 public class LocationDTO implements LocationRepresentation {
 	private String id;
 	@NotNull
 	private String name;
 	
-	private CoordinateDTO coordinate;
+	private Coordinate coordinate;
 	private PointOfInterest mappedPointOfInterest;
 
 	public LocationDTO() {
-		coordinate = new CoordinateDTO();
+		coordinate = new Coordinate();
 	}
 
-	public LocationDTO(String id, String name, CoordinateDTO coordinate) {
-		super();
+	public LocationDTO(String id, String name, Coordinate coordinate) {
 		this.id = id;
 		this.name = name;
 		this.coordinate = coordinate;
 	}
 	
 	public LocationDTO(String id, String name, Double xValue, Double yValue) {
-		this(id, name, new CoordinateDTO(xValue, yValue));
+		this(id, name, new Coordinate(xValue, yValue));
 	}
 
     public LocationDTO(String id, String name, PointOfInterest pointOfInterestDTO) {
@@ -62,7 +64,7 @@ public class LocationDTO implements LocationRepresentation {
 	}
 
 	@Override
-	public CoordinateDTO getCoordinate() {
+	public Coordinate getCoordinate() {
 		return coordinate;
 	}
 
@@ -71,7 +73,7 @@ public class LocationDTO implements LocationRepresentation {
 		return mappedPointOfInterest != null ? mappedPointOfInterest.getId() : null;
 	}
 
-	public void setCoordinate(CoordinateDTO coordinate) {
+	public void setCoordinate(Coordinate coordinate) {
 		this.coordinate = coordinate;
 	}
 

@@ -1,6 +1,5 @@
 package org.ehfg.app.base;
 
-import org.ehfg.app.base.dto.CoordinateDTO;
 import org.ehfg.app.base.dto.LocationDTO;
 
 import javax.validation.*;
@@ -29,7 +28,7 @@ class LocationDTOValidator implements ConstraintValidator<LocationMappingValid, 
             return true;
         }
 
-        Set<ConstraintViolation<CoordinateDTO>> violations = validator.validate(value.getCoordinate(), Default.class);
+        Set<ConstraintViolation<Coordinate>> violations = validator.validate(value.getCoordinate(), Default.class);
         if (violations.isEmpty()) {
             return true;
         }

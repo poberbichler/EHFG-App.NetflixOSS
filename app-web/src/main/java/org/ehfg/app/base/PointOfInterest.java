@@ -1,6 +1,6 @@
 package org.ehfg.app.base;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
+import com.google.common.base.MoreObjects;
 import org.ehfg.app.rest.MapCategoryRepresentation;
 import org.ehfg.app.rest.PointOfInterestRepresentation;
 import org.springframework.data.annotation.Id;
@@ -38,14 +38,6 @@ public class PointOfInterest implements PointOfInterestRepresentation {
 
 	@Transient
 	private String categoryName;
-
-	public String getCategoryName() {
-		return categoryName;
-	}
-
-	public void setCategoryName(String categoryName) {
-		this.categoryName = categoryName;
-	}
 
 	@Override
 	public String getId() {
@@ -123,9 +115,20 @@ public class PointOfInterest implements PointOfInterestRepresentation {
 		this.mapCategory = mapCategory;
 	}
 
+	public String getCategoryName() {
+		return categoryName;
+	}
+
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
+	}
+
 	@Override
 	public String toString() {
-		return ToStringBuilder.reflectionToString(this);
+		return MoreObjects.toStringHelper(this)
+				.add("id", id)
+				.add("name", name)
+				.toString();
 	}
 
 }
