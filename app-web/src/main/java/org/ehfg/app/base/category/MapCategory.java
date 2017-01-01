@@ -1,7 +1,6 @@
-package org.ehfg.app.base;
+package org.ehfg.app.base.category;
 
 import com.google.common.base.MoreObjects;
-import org.ehfg.app.rest.MapCategoryRepresentation;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 

@@ -1,7 +1,7 @@
 package org.ehfg.app.twitter;
 
 import org.ehfg.app.base.config.AppConfig;
-import org.ehfg.app.base.dto.MasterDataFacade;
+import org.ehfg.app.base.MasterDataFacade;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

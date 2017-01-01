@@ -1,4 +1,6 @@
-package org.ehfg.app.rest;
+package org.ehfg.app.base.location;
+
+import org.ehfg.app.base.CoordinateRepresentation;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -9,28 +11,16 @@ import javax.xml.bind.annotation.XmlElement;
  * @since 04.2015
  */
 @XmlAccessorType(XmlAccessType.NONE)
-public interface PointOfInterestRepresentation {
+public interface LocationRepresentation {
 	@XmlElement(name = "id")
 	String getId();
 
 	@XmlElement(name = "name")
 	String getName();
 
-	@XmlElement(name = "description")
-	String getDescription();
-
-	@XmlElement(name = "address")
-	String getAddress();
-
-	@XmlElement(name = "contact")
-	String getContact();
-
-	@XmlElement(name = "website")
-	String getWebsite();
-
 	@XmlElement(name = "coordinate")
 	CoordinateRepresentation getCoordinate();
 
-	@XmlElement(name = "category")
-	MapCategoryRepresentation getCategory();
+	@XmlElement(name = "pointId")
+	String getPointOfInterestId();
 }

@@ -1,4 +1,6 @@
-package org.ehfg.app.base;
+package org.ehfg.app.base.location;
+
+import org.ehfg.app.base.Coordinate;
 
 import javax.validation.*;
 import javax.validation.groups.Default;

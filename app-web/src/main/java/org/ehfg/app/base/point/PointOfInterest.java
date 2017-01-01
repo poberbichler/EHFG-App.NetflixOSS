@@ -1,8 +1,9 @@
-package org.ehfg.app.base;
+package org.ehfg.app.base.point;
 
 import com.google.common.base.MoreObjects;
-import org.ehfg.app.rest.MapCategoryRepresentation;
-import org.ehfg.app.rest.PointOfInterestRepresentation;
+import org.ehfg.app.base.Coordinate;
+import org.ehfg.app.base.category.MapCategory;
+import org.ehfg.app.base.category.MapCategoryRepresentation;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;

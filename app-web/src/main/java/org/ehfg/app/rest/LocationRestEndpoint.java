@@ -1,7 +1,8 @@
 package org.ehfg.app.rest;
 
-import org.ehfg.app.base.Location;
-import org.ehfg.app.base.dto.MasterDataFacade;
+import org.ehfg.app.base.location.Location;
+import org.ehfg.app.base.MasterDataFacade;
+import org.ehfg.app.base.location.LocationRepresentation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;

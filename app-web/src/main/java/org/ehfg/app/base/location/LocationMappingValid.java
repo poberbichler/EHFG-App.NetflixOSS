@@ -1,4 +1,4 @@
-package org.ehfg.app.base;
+package org.ehfg.app.base.location;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;

@@ -1,4 +1,4 @@
-package org.ehfg.app.rest;
+package org.ehfg.app.base;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;

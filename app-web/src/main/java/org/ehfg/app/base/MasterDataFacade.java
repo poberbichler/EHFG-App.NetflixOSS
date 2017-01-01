@@ -1,9 +1,9 @@
-package org.ehfg.app.base.dto;
+package org.ehfg.app.base;
 
-import org.ehfg.app.base.Location;
-import org.ehfg.app.base.MapCategory;
-import org.ehfg.app.base.PointOfInterest;
+import org.ehfg.app.base.category.MapCategory;
 import org.ehfg.app.base.config.AppConfig;
+import org.ehfg.app.base.location.Location;
+import org.ehfg.app.base.point.PointOfInterest;
 
 import java.util.Collection;
 import java.util.List;

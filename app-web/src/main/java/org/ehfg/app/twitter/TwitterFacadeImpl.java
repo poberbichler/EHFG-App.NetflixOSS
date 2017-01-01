@@ -1,7 +1,7 @@
 package org.ehfg.app.twitter;
 
 import org.apache.commons.lang3.Validate;
-import org.ehfg.app.base.dto.MasterDataFacade;
+import org.ehfg.app.base.MasterDataFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestOperations;

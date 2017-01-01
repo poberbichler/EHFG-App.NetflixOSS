@@ -1,6 +1,4 @@
-package org.ehfg.app.data;
-
-import org.ehfg.app.program.ConferenceDayDTO;
+package org.ehfg.app.program;
 
 import java.util.List;
 

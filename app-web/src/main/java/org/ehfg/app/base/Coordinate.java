@@ -1,7 +1,6 @@
 package org.ehfg.app.base;
 
 import com.google.common.base.MoreObjects;
-import org.ehfg.app.rest.CoordinateRepresentation;
 
 import javax.validation.constraints.NotNull;
 

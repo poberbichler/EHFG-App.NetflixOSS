@@ -1,7 +1,8 @@
-package org.ehfg.app.base;
+package org.ehfg.app.base.location;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.ehfg.app.rest.LocationRepresentation;
+import org.ehfg.app.base.Coordinate;
+import org.ehfg.app.base.point.PointOfInterest;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.DBRef;

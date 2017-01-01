@@ -1,6 +1,7 @@
 package org.ehfg.app.rest;
 
-import org.ehfg.app.base.dto.MasterDataFacade;
+import org.ehfg.app.base.MasterDataFacade;
+import org.ehfg.app.base.point.PointOfInterestRepresentation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;

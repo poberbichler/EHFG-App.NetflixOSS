@@ -1,4 +1,4 @@
-package org.ehfg.app.base;
+package org.ehfg.app.base.point;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 
@@ -6,6 +6,6 @@ import org.springframework.data.mongodb.repository.MongoRepository;
  * @author patrick
  * @since 06.2015
  */
-interface LocationRepository extends MongoRepository<Location, String> {
+public interface PointOfInterestRepository extends MongoRepository<PointOfInterest, String> {
 	// empty
 }

@@ -1,4 +1,4 @@
-package org.ehfg.app.base;
+package org.ehfg.app.base.category;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 
