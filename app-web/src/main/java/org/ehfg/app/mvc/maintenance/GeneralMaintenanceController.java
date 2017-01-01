@@ -1,6 +1,6 @@
 package org.ehfg.app.mvc.maintenance;
 
-import org.ehfg.app.base.AppConfig;
+import org.ehfg.app.base.config.AppConfig;
 import org.ehfg.app.base.dto.MasterDataFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

@@ -2,6 +2,7 @@ package org.ehfg.app.base.dto;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.ehfg.app.base.LocationMappingValid;
+import org.ehfg.app.base.PointOfInterest;
 import org.ehfg.app.rest.LocationRepresentation;
 
 import javax.validation.constraints.NotNull;
@@ -13,13 +14,13 @@ import javax.validation.constraints.NotNull;
  * @since 03.2014
  */
 @LocationMappingValid
-public final class LocationDTO implements LocationRepresentation {
+public class LocationDTO implements LocationRepresentation {
 	private String id;
 	@NotNull
 	private String name;
 	
 	private CoordinateDTO coordinate;
-	private PointOfInterestDTO mappedPointOfInterest;
+	private PointOfInterest mappedPointOfInterest;
 
 	public LocationDTO() {
 		coordinate = new CoordinateDTO();
@@ -36,7 +37,7 @@ public final class LocationDTO implements LocationRepresentation {
 		this(id, name, new CoordinateDTO(xValue, yValue));
 	}
 
-    public LocationDTO(String id, String name, PointOfInterestDTO pointOfInterestDTO) {
+    public LocationDTO(String id, String name, PointOfInterest pointOfInterestDTO) {
         this.id = id;
         this.name = name;
         this.mappedPointOfInterest = pointOfInterestDTO;
@@ -74,11 +75,11 @@ public final class LocationDTO implements LocationRepresentation {
 		this.coordinate = coordinate;
 	}
 
-    public PointOfInterestDTO getMappedPointOfInterest() {
+    public PointOfInterest getMappedPointOfInterest() {
         return mappedPointOfInterest;
     }
 
-    public void setMappedPointOfInterest(PointOfInterestDTO mappedPointOfInterest) {
+    public void setMappedPointOfInterest(PointOfInterest mappedPointOfInterest) {
         this.mappedPointOfInterest = mappedPointOfInterest;
     }
 

@@ -1,4 +1,4 @@
-package org.ehfg.app.base;
+package org.ehfg.app.base.config;
 
 import com.google.common.base.MoreObjects;
 import org.springframework.data.annotation.Id;
@@ -32,7 +32,7 @@ public class AppConfig {
 	/**
 	 * @return a new instance of Appconfig, including some default values
 	 */
-	static AppConfig withDefaultValues() {
+	public static AppConfig withDefaultValues() {
 		final AppConfig result = new AppConfig();
 		result.setHashtag("#EHFG2015");
 		result.setBackdoorScript("console.log('hello world');");

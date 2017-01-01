@@ -1,6 +1,7 @@
 package org.ehfg.app.base;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
+import com.google.common.base.MoreObjects;
+import org.ehfg.app.rest.CoordinateRepresentation;
 
 import javax.validation.constraints.NotNull;
 
@@ -8,7 +9,7 @@ import javax.validation.constraints.NotNull;
  * @author patrick
  * @since 13.04.2014
  */
-class Coordinate {
+public class Coordinate implements CoordinateRepresentation {
 	@NotNull
 	private Double xValue;
 
@@ -42,6 +43,19 @@ class Coordinate {
 
 	@Override
 	public String toString() {
-		return ToStringBuilder.reflectionToString(this);
+		return MoreObjects.toStringHelper(this)
+				.add("xValue", xValue)
+				.add("yValue", yValue)
+				.toString();
+	}
+
+	@Override
+	public double getLatitude() {
+		return xValue;
+	}
+
+	@Override
+	public double getLongitude() {
+		return yValue;
 	}
 }

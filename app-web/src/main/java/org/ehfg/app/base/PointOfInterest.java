@@ -1,7 +1,10 @@
 package org.ehfg.app.base;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.ehfg.app.rest.MapCategoryRepresentation;
+import org.ehfg.app.rest.PointOfInterestRepresentation;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.Valid;
@@ -12,7 +15,7 @@ import javax.validation.constraints.NotNull;
  * @since 06.2015
  */
 @Document
-final class PointOfInterest {
+public class PointOfInterest implements PointOfInterestRepresentation {
 	@Id
 	private String id;
 
@@ -33,7 +36,18 @@ final class PointOfInterest {
 	@NotNull
 	private Coordinate coordinate;
 
+	@Transient
+	private String categoryName;
 
+	public String getCategoryName() {
+		return categoryName;
+	}
+
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
+	}
+
+	@Override
 	public String getId() {
 		return id;
 	}
@@ -42,6 +56,7 @@ final class PointOfInterest {
 		this.id = id;
 	}
 
+	@Override
 	public String getName() {
 		return name;
 	}
@@ -50,6 +65,7 @@ final class PointOfInterest {
 		this.name = name;
 	}
 
+	@Override
 	public String getAddress() {
 		return address;
 	}
@@ -58,6 +74,7 @@ final class PointOfInterest {
 		this.address = address;
 	}
 
+	@Override
 	public String getDescription() {
 		return description;
 	}
@@ -66,14 +83,21 @@ final class PointOfInterest {
 		this.description = description;
 	}
 
+	@Override
 	public Coordinate getCoordinate() {
 		return coordinate;
+	}
+
+	@Override
+	public MapCategoryRepresentation getCategory() {
+		return null;
 	}
 
 	public void setCoordinate(Coordinate coordinate) {
 		this.coordinate = coordinate;
 	}
 
+	@Override
 	public String getContact() {
 		return contact;
 	}
@@ -82,6 +106,7 @@ final class PointOfInterest {
 		this.contact = contact;
 	}
 
+	@Override
 	public String getWebsite() {
 		return website;
 	}
