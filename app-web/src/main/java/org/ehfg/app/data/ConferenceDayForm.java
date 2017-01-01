@@ -11,8 +11,9 @@ import java.util.List;
 public class ConferenceDayForm {
 	private List<ConferenceDayDTO> days;
 
+	// default ctor, needed by various frameworks :(
 	public ConferenceDayForm() {
-		
+
 	}
 
 	public ConferenceDayForm(List<ConferenceDayDTO> days) {

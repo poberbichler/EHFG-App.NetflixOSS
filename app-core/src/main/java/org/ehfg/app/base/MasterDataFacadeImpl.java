@@ -1,7 +1,6 @@
 package org.ehfg.app.base;
 
 import org.apache.commons.lang3.StringUtils;
-import org.ehfg.app.validation.Validate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -35,7 +34,6 @@ class MasterDataFacadeImpl implements MasterDataFacade {
 	}
 
 	@Override
-	@Validate
 	public ConfigurationDTO saveAppConfiguration(ConfigurationDTO source) {
 		final AppConfig target = new AppConfig();
 

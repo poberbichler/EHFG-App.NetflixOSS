@@ -1,15 +1,12 @@
 package org.ehfg.app.twitter;
 
 import org.apache.commons.lang3.Validate;
-import org.ehfg.app.base.ConfigurationDTO;
 import org.ehfg.app.base.MasterDataFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestOperations;
 
-import java.time.LocalDateTime;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -52,28 +49,6 @@ class TwitterFacadeImpl implements TwitterFacade {
 	}
 
 	@Override
-	public Collection<TweetDTO> findNewerTweetsForCongress(LocalDateTime lastTweet) {
-		final ConfigurationDTO config = masterDataFacade.getAppConfiguration();
-		if (config != null && config.getHashtag() != null) {
-			return restTemplate.getForObject(TWITTER_URL + "/{hashtag}/{timestamp}", Collection.class, config.getHashtag(), lastTweet);
-		}
-
-		return Collections.emptyList();
-	}
-
-	@Override
-	public Object findTweetPage(int pageId) {
-		return findTweetPageWithSize(pageId, masterDataFacade.getAppConfiguration().getNumberOfTweets());
-	}
-
-
-	@Override
-	public Object findTweetPageWithSize(int pageId, int pageSize) {
-		return restTemplate.getForObject(TWITTER_URL + "/tweets/page/{pageCounter}?size={pageSize}", Object.class, pageId, pageSize);
-	}
-
-
-	@Override
 	public TwitterStreamStatus checkIfRelevantStreamIsRunning() {
 		final Collection<String> currentStreams = findStreams();
 		final String thisYearsHashtag = findHashtag();
@@ -84,11 +59,6 @@ class TwitterFacadeImpl implements TwitterFacade {
 		}
 
 		return TwitterStreamStatus.RUNNING;
-	}
-
-	@Override
-	public Collection<TwitterStatisticLine> findStats() {
-		throw new IllegalStateException("TwitterFacadeImpl.findStats not supported yet");
 	}
 
 	@Override

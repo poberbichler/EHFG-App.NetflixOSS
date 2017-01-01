@@ -1,6 +1,5 @@
 package org.ehfg.app.twitter;
 
-import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
@@ -15,12 +14,6 @@ public interface TwitterFacade {
 	
 	String findHashtag();
 	
-	Collection<TweetDTO> findNewerTweetsForCongress(LocalDateTime lastTweet);
-	Object findTweetPage(int pageId);
-	Object findTweetPageWithSize(int pageId, int pageSize);
-
-	Collection<TwitterStatisticLine> findStats();
-	
 	/**
 	 * checks if this year's stream is running, and starts it in case it wasn't running
 	 * 
@@ -28,5 +21,5 @@ public interface TwitterFacade {
 	 */
 	TwitterStreamStatus checkIfRelevantStreamIsRunning();
 
-    List<TweetDTO> findTweetsForExport(String hashtag);
+	List<TweetDTO> findTweetsForExport(String hashtag);
 }
