@@ -1,8 +1,6 @@
 package org.ehfg.app.program.service;
 
-import org.assertj.core.api.Assertions;
 import org.ehfg.app.program.data.db.SessionRepository;
-import org.ehfg.app.program.data.db.SpeakerRepository;
 import org.ehfg.app.program.data.output.ConferenceDayRepresentation;
 import org.ehfg.app.program.data.output.SessionDTO;
 import org.ehfg.app.program.days.ConferenceDay;
@@ -14,7 +12,6 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -68,7 +65,7 @@ public class ProgramServiceImplTest {
 
 		for (int i = 0; i < days; i++) {
 			ConferenceDay day = new ConferenceDay();
-			day.setDate(LocalDate.now().plusDays(i));
+			day.setDay(LocalDate.now().plusDays(i));
 			day.setDescription("Day " + i);
 			day.setId(Integer.toString(i));
 			result.add(day);

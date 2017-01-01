@@ -92,13 +92,13 @@ public class ConferenceDayControllerTest {
 	private ConferenceDay createDay() {
 		ConferenceDay conferenceDay = new ConferenceDay();
 		conferenceDay.setId(UUID.randomUUID().toString());
-		conferenceDay.setDate(LocalDate.now());
+		conferenceDay.setDay(LocalDate.now());
 		conferenceDay.setDescription("Day 1");
 		return conferenceDay;
 	}
 
 	private String getRequestBody(ConferenceDay day) {
-		return String.format("{\"id\": \"%s\", \"description\": \"%s\", \"date\": \"%s\" }", day.getId(), day.getDescription(), day.getDate());
+		return String.format("{\"id\": \"%s\", \"description\": \"%s\", \"date\": \"%s\" }", day.getId(), day.getDescription(), day.getDay());
 	}
 
 	private String getRequestBodyAsList(ConferenceDay... conferenceDays) {

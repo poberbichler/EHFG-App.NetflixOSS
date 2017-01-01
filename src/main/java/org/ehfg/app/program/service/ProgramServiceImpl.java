@@ -68,7 +68,7 @@ class ProgramServiceImpl implements ProgramService {
 		LocalDateTime sessionDate = session.getStartTime();
 
 		return days.stream()
-				.filter(day -> day.getDate().equals(sessionDate.toLocalDate()))
+				.filter(day -> day.getDay().equals(sessionDate.toLocalDate()))
 				.findFirst();
 	}
 }

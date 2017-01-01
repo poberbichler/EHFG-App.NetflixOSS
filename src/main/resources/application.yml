@@ -1,5 +1,8 @@
 server.port: 8083
 
+spring.jackson:
+  date-format: yyyy-MM-dd
+
 eureka:
   client:
     serviceUrl:

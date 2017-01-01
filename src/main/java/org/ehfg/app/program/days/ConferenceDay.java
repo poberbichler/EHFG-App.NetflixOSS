@@ -16,7 +16,7 @@ public class ConferenceDay {
 	@Id
 	private String id;
 
-	private LocalDate date;
+	private LocalDate day;
 	private String description;
 
 	public String getId() {
@@ -27,12 +27,12 @@ public class ConferenceDay {
 		this.id = id;
 	}
 
-	public LocalDate getDate() {
-		return date;
+	public LocalDate getDay() {
+		return day;
 	}
 
-	public void setDate(LocalDate date) {
-		this.date = date;
+	public void setDay(LocalDate day) {
+		this.day = day;
 	}
 
 	public String getDescription() {
@@ -66,7 +66,7 @@ public class ConferenceDay {
 	public String toString() {
 		return MoreObjects.toStringHelper(this)
 				.add("id", id)
-				.add("date", date)
+				.add("day", day)
 				.add("description", description)
 				.toString();
 	}

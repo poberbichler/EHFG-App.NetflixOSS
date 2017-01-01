@@ -16,6 +16,5 @@ public class JacksonCustomizer implements Jackson2ObjectMapperBuilderCustomizer 
 		jacksonObjectMapperBuilder.modulesToInstall(new JaxbAnnotationModule());
 		jacksonObjectMapperBuilder.indentOutput(true);
 		jacksonObjectMapperBuilder.serializersByType(JacksonSerializers.getSerializers());
-		jacksonObjectMapperBuilder.deserializersByType(JacksonSerializers.getDeserializers());
 	}
 }

@@ -39,7 +39,7 @@ class ConferenceDayServiceImpl implements ConferenceDayService {
 			checkNotNull(persistedDay, "no conferenceday with id [%s] found", conferenceDay.getId());
 
 			persistedDay.setDescription(conferenceDay.getDescription());
-			persistedDay.setDate(conferenceDay.getDate());
+			persistedDay.setDay(conferenceDay.getDay());
 			conferenceDayRepository.save(persistedDay);
 		} else {
 			conferenceDayRepository.save(conferenceDay);
