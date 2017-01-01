@@ -1,11 +1,12 @@
 package org.ehfg.app.base;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.ehfg.app.rest.LocationRepresentation;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -13,7 +14,7 @@ import javax.validation.constraints.NotNull;
  * @since 07.2014
  */
 @Document
-class Location {
+public class Location implements LocationRepresentation {
 	@Id
 	private String id;
 
@@ -25,9 +26,12 @@ class Location {
 
 	private Coordinate coordinate;
 
-    public Location() {
-        // no arg ctor needed by mongodb
-    }
+	@Transient
+	private String selectedPointOfInterestId;
+
+	public Location() {
+		// no arg ctor needed for editing
+	}
 
 	public Location(String id, String name, PointOfInterest point) {
 		this.id = id;
@@ -45,6 +49,7 @@ class Location {
 		this(id, name, new Coordinate(xValue, yValue));
 	}
 
+	@Override
 	public String getId() {
 		return id;
 	}
@@ -53,6 +58,7 @@ class Location {
 		this.id = id;
 	}
 
+	@Override
 	public String getName() {
 		return name;
 	}
@@ -61,8 +67,18 @@ class Location {
 		this.name = name;
 	}
 
+	@Override
 	public Coordinate getCoordinate() {
 		return coordinate;
+	}
+
+	@Override
+	public String getPointOfInterestId() {
+		if (point == null) {
+			return null;
+		}
+
+		return point.getId();
 	}
 
 	public void setCoordinate(Coordinate coordinate) {
@@ -75,6 +91,14 @@ class Location {
 
 	public void setPoint(PointOfInterest point) {
 		this.point = point;
+	}
+
+	public String getSelectedPointOfInterestId() {
+		return selectedPointOfInterestId;
+	}
+
+	public void setSelectedPointOfInterestId(String selectedPointOfInterestId) {
+		this.selectedPointOfInterestId = selectedPointOfInterestId;
 	}
 
 	@Override

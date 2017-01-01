@@ -1,16 +1,13 @@
 package org.ehfg.app.base;
 
-import org.apache.commons.lang3.StringUtils;
 import org.ehfg.app.base.config.AppConfig;
 import org.ehfg.app.base.config.AppConfigRepository;
-import org.ehfg.app.base.dto.LocationDTO;
 import org.ehfg.app.base.dto.MasterDataFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -64,10 +61,8 @@ class MasterDataFacadeImpl implements MasterDataFacade {
 	}
 
 	@Override
-	public List<LocationDTO> findAllLocation() {
-		return locationRepository.findAll().stream()
-				.map(this::mapToDto)
-				.collect(Collectors.toList());
+	public List<Location> findAllLocation() {
+		return locationRepository.findAll();
 	}
 
 	@Override
@@ -86,32 +81,15 @@ class MasterDataFacadeImpl implements MasterDataFacade {
 		mapCategoryRepository.delete(id);
 	}
 
-	private LocationDTO mapToDto(Location input) {
-		if (input == null) {
-			return null;
-		}
-
-		if (input.getPoint() != null) {
-			return new LocationDTO(input.getId(), input.getName(), input.getPoint());
-		}
-
-		return new LocationDTO(input.getId(), input.getName(), input.getCoordinate().getxValue(), input.getCoordinate().getyValue());
-	}
-
 	@Override
-	public String saveLocation(LocationDTO source) {
-		Location target = null;
-		if (source.getMappedPointOfInterest() != null && !StringUtils.isEmpty(source.getMappedPointOfInterest().getId())) {
-			PointOfInterest point = pointOfInterestRepository.findOne(source.getMappedPointOfInterest().getId());
-			target = new Location(source.getId(), source.getName(), point);
+	public Location saveLocation(Location location) {
+		checkNotNull(location, "source must not be null");
 
-		} else {
-			target = new Location(source.getId(), source.getName(),
-					source.getCoordinate().getxValue(), source.getCoordinate().getyValue());
+		if (location.getSelectedPointOfInterestId() != null) {
+			location.setPoint(pointOfInterestRepository.findOne(location.getSelectedPointOfInterestId()));
 		}
 
-		locationRepository.save(target);
-		return target.getId();
+		return locationRepository.save(location);
 	}
 
 	@Override

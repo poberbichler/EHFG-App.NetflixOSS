@@ -1,15 +1,12 @@
 package org.ehfg.app.mvc.maintenance;
 
-import org.ehfg.app.base.dto.LocationDTO;
+import org.ehfg.app.base.Location;
 import org.ehfg.app.base.dto.MasterDataFacade;
 import org.ehfg.app.program.ProgramFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
@@ -34,23 +31,23 @@ public class LocationController {
 		this.programFacade = programFacade;
 	}
 
-	@RequestMapping(method = RequestMethod.GET)
+	@GetMapping
 	public ModelAndView getPage() {
 		ModelAndView view = new ModelAndView("location");
 		
-		final List<LocationDTO> alreadyAssignedLocations = masterDataFacade.findAllLocation();
+		List<Location> alreadyAssignedLocations = masterDataFacade.findAllLocation();
 		
 		view.addObject("activePage", "location");
 		view.addObject("locations", alreadyAssignedLocations);
 		view.addObject("availableLocations", resolveLocations(alreadyAssignedLocations));
 		view.addObject("pointsOfInterest", masterDataFacade.findAllPointsOfInterest());
-		view.addObject("editLocation", new LocationDTO());
+		view.addObject("editLocation", new Location());
 		
 		return view;
 	}
 	
-	@RequestMapping(method = RequestMethod.POST)
-	public String saveLocation(@Valid @ModelAttribute("editLocation") LocationDTO location, BindingResult result) {
+	@PostMapping
+	public String saveLocation(@Valid @ModelAttribute("editLocation") Location location, BindingResult result) {
 		if (!result.hasErrors()) {
 			masterDataFacade.saveLocation(location);
 		}
@@ -58,15 +55,15 @@ public class LocationController {
 		return "redirect:/maintenance/location";
 	}
 
-	@RequestMapping("delete/{id}")
+	@GetMapping("delete/{id}")
 	public String deleteLocation(@PathVariable("id") String id) {
 		masterDataFacade.deleteLocation(id);
 		return "redirect:/maintenance/location";
 	}
 	
-	private Collection<String> resolveLocations(final Collection<LocationDTO> alreadyAssignedLocations) {
+	private Collection<String> resolveLocations(Collection<Location> alreadyAssignedLocations) {
 		List<String> availableLocations = programFacade.findAvailableLocations();
-		for (LocationDTO location : alreadyAssignedLocations) {
+		for (Location location : alreadyAssignedLocations) {
 			availableLocations.remove(location.getName());
 		}
 		

@@ -1,13 +1,10 @@
 package org.ehfg.app.rest;
 
-import org.ehfg.app.base.dto.LocationDTO;
+import org.ehfg.app.base.Location;
 import org.ehfg.app.base.dto.MasterDataFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 
@@ -25,14 +22,14 @@ public final class LocationRestEndpoint {
 		this.masterDataFacade = masterDataFacade;
 	}
 
-	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public Collection<? extends LocationRepresentation> findAll() {
 		return masterDataFacade.findAllLocation();
 	}
 	
-	@RequestMapping(value = "{locationName}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "{locationName}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public LocationRepresentation findByName(@PathVariable("locationName") String locationName) {
-		for (final LocationDTO location : masterDataFacade.findAllLocation()) {
+		for (Location location : masterDataFacade.findAllLocation()) {
 			if (location.getName().equalsIgnoreCase(locationName)) {
 				return location;
 			}

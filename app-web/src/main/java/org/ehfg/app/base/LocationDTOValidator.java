@@ -1,7 +1,5 @@
 package org.ehfg.app.base;
 
-import org.ehfg.app.base.dto.LocationDTO;
-
 import javax.validation.*;
 import javax.validation.groups.Default;
 import java.util.Set;
@@ -10,7 +8,7 @@ import java.util.Set;
  * @author patrick
  * @since 08.2015
  */
-class LocationDTOValidator implements ConstraintValidator<LocationMappingValid, LocationDTO> {
+class LocationDTOValidator implements ConstraintValidator<LocationMappingValid, Location> {
     private static final Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 
     @Override
@@ -19,12 +17,12 @@ class LocationDTOValidator implements ConstraintValidator<LocationMappingValid, 
     }
 
     @Override
-    public boolean isValid(LocationDTO value, ConstraintValidatorContext context) {
+    public boolean isValid(Location value, ConstraintValidatorContext context) {
         if (value == null) {
             return false;
         }
 
-        if (value.getMappedPointOfInterest() != null) {
+        if (value.getPoint() != null) {
             return true;
         }
 

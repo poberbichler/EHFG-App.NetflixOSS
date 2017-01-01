@@ -17,7 +17,7 @@
 				<td th:text="${location.name}">name</td>
 				<td th:text="${location.coordinate?.xValue}">xValue</td>
 				<td th:text="${location.coordinate?.yValue}">yValue</td>
-				<td th:text="${location.mappedPointOfInterest?.name}">mapped point</td>
+				<td th:text="${location.point?.name}">mapped point</td>
                 <td><a th:href="@{location/delete/__${location.id}__}">delete</a></td>
 			</tr>
 		</tbody>
@@ -40,7 +40,7 @@
 		<div class="form-group">
 			<label for="mappedPoint" class="col-sm-2 control-label">Point of Interest</label>
 			<div class="col-sm-4">
-				<select id="mappedPoint" th:field="*{mappedPointOfInterest.id}" class="form-control">
+				<select id="mappedPoint" th:field="*{selectedPointOfInterestId}" class="form-control">
                     <option th:value="${null}" th:text="'--- Please choose ---'">null</option>
 					<option th:each="point : ${pointsOfInterest}" th:value="${point.id}" th:text="${point.name}">point</option>
 				</select>
