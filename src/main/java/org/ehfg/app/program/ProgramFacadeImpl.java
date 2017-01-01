@@ -33,7 +33,10 @@ class ProgramFacadeImpl implements ProgramFacade {
 
 	@Override
 	public List<ConferenceDayDTO> findDays() {
-		return restTemplate.getForObject("http://EHFGAPP-PROGRAM/conferencedays", List.class);
+		ParameterizedTypeReference<List<ConferenceDayDTO>> ptr = new ParameterizedTypeReference<List<ConferenceDayDTO>>() {
+		};
+		ResponseEntity<List<ConferenceDayDTO>> entity = restTemplate.exchange("http://EHFGAPP-PROGRAM/conferencedays", HttpMethod.GET, null, ptr);
+		return entity.getBody();
 	}
 
 	@Override
