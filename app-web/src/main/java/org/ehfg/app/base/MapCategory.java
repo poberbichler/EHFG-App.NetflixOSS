@@ -1,7 +1,7 @@
 package org.ehfg.app.base;
 
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
+import com.google.common.base.MoreObjects;
+import org.ehfg.app.rest.MapCategoryRepresentation;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -10,48 +10,54 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * @since 08.2016
  */
 @Document
-public class MapCategory {
-    @Id
-    private String id;
+public class MapCategory implements MapCategoryRepresentation {
+	@Id
+	private String id;
 
-    private String name;
-    private String imageUrl;
-    private String cssClass;
+	private String name;
+	private String imageUrl;
+	private String cssClass;
 
-    public String getId() {
-        return id;
-    }
+	public String getId() {
+		return id;
+	}
 
-    public void setId(String id) {
-        this.id = id;
-    }
+	public void setId(String id) {
+		this.id = id;
+	}
 
-    public String getName() {
-        return name;
-    }
+	@Override
+	public String getName() {
+		return name;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public String getImageUrl() {
-        return imageUrl;
-    }
+	@Override
+	public String getImageUrl() {
+		return imageUrl;
+	}
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
+	}
 
-    public String getCssClass() {
-        return cssClass;
-    }
+	@Override
+	public String getCssClass() {
+		return cssClass;
+	}
 
-    public void setCssClass(String cssClass) {
-        this.cssClass = cssClass;
-    }
+	public void setCssClass(String cssClass) {
+		this.cssClass = cssClass;
+	}
 
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
-    }
+	@Override
+	public String toString() {
+		return MoreObjects.toStringHelper(this)
+				.add("id", id)
+				.add("name", name)
+				.toString();
+	}
 }

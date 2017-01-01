@@ -1,5 +1,6 @@
 package org.ehfg.app.base.dto;
 
+import org.ehfg.app.base.MapCategory;
 import org.ehfg.app.base.PointOfInterest;
 import org.ehfg.app.base.config.AppConfig;
 
@@ -18,8 +19,8 @@ public interface MasterDataFacade {
 	Collection<PointOfInterest> savePointOfInterest(PointOfInterest source);
 	void removePoint(String id);
 
-	Collection<MapCategoryDTO> findAllMapCategories();
-	void saveMapCategory(MapCategoryDTO categoryDTO);
+	Collection<MapCategory> findAllMapCategories();
+	void saveMapCategory(MapCategory category);
 	void deleteMapCategory(String id);
 
 	List<LocationDTO> findAllLocation();

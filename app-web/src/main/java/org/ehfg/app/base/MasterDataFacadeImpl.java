@@ -4,7 +4,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.ehfg.app.base.config.AppConfig;
 import org.ehfg.app.base.config.AppConfigRepository;
 import org.ehfg.app.base.dto.LocationDTO;
-import org.ehfg.app.base.dto.MapCategoryDTO;
 import org.ehfg.app.base.dto.MasterDataFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -72,33 +71,14 @@ class MasterDataFacadeImpl implements MasterDataFacade {
 	}
 
 	@Override
-	public Collection<MapCategoryDTO> findAllMapCategories() {
-		return mapCategoryRepository.findAll().stream()
-				.map(this::mapToDto)
-				.collect(Collectors.toList());
-	}
-
-	private MapCategoryDTO mapToDto(MapCategory source) {
-		return new MapCategoryDTO(source.getId(), source.getName(), source.getCssClass(), source.getImageUrl());
+	public Collection<MapCategory> findAllMapCategories() {
+		return mapCategoryRepository.findAll();
 	}
 
 	@Override
-	public void saveMapCategory(MapCategoryDTO source) {
-		MapCategory categoryToSave = null;
-
-		if (source.getId() != null) {
-			categoryToSave = mapCategoryRepository.findOne(source.getId());
-		}
-
-		if (categoryToSave == null) {
-			categoryToSave = new MapCategory();
-		}
-
-		categoryToSave.setCssClass(source.getCssClass());
-		categoryToSave.setImageUrl(source.getImageUrl());
-		categoryToSave.setName(source.getName());
-
-		mapCategoryRepository.save(categoryToSave);
+	public void saveMapCategory(MapCategory category) {
+		checkNotNull(category, "source must not be null");
+		mapCategoryRepository.save(category);
 	}
 
 	@Override
