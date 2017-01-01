@@ -20,25 +20,30 @@ spring.thymeleaf:
   excludedViewNames: tweetExport
 
 # use this setting so the eureka dashboard will work with windows machine
-spring:
-  freemarker:
-    prefer-file-system-access: false
+spring.freemarker.prefer-file-system-access: false
 
 zuul:
   prefix: /rest
   routes:
-    sessions:
+    session-service:
       serviceId: ehfgapp-program
-      route: /program
-      strip-prefix: false
+      strip-prefix: true
+      path: /sessions/**
+      servicePath: /program
+
     speakers:
       serviceId: ehfgapp-program
-      route: /speakers
       strip-prefix: false
+
     program:
       serviceId: ehfgapp-program
-      route: /program
       strip-prefix: false
+
+    twitter:
+      serviceId: ehfgapp-twitter
+      strip-prefix: true
+      servicePath: /tweets
+
     internal:
       path: /**
       url: forward:/api
