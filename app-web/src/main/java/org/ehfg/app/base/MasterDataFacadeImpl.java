@@ -29,22 +29,13 @@ class MasterDataFacadeImpl implements MasterDataFacade {
 	}
 
 	@Override
-	public ConfigurationDTO getAppConfiguration() {
-		final AppConfig config = configRepository.find().orElse(AppConfig.withDefaultValues());
-		return new ConfigurationDTO(config.getHashtag(), config.getNumberOfTweets(), config.getBackdoorScript());
+	public AppConfig getAppConfiguration() {
+		return configRepository.find().orElse(AppConfig.withDefaultValues());
 	}
 
 	@Override
-	public ConfigurationDTO saveAppConfiguration(ConfigurationDTO source) {
-		final AppConfig target = new AppConfig();
-
-		target.setAndFixHashtag(source.getHashtag());
-		target.setNumberOfTweets(source.getNumberOfTweets());
-		target.setBackdoorScript(source.getBackdoorScript());
-
-		configRepository.save(target);
-
-		return getAppConfiguration();
+	public AppConfig saveAppConfiguration(AppConfig source) {
+		return configRepository.save(source);
 	}
 
 	@Override

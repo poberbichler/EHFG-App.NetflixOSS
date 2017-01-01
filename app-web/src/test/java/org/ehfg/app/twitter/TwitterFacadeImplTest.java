@@ -1,6 +1,6 @@
 package org.ehfg.app.twitter;
 
-import org.ehfg.app.base.dto.ConfigurationDTO;
+import org.ehfg.app.base.AppConfig;
 import org.ehfg.app.base.dto.MasterDataFacade;
 import org.junit.Before;
 import org.junit.Test;
@@ -32,7 +32,7 @@ public class TwitterFacadeImplTest {
 
 	@Before
 	public void initMocks() {
-		ConfigurationDTO mockedConfig = mock(ConfigurationDTO.class);
+		AppConfig mockedConfig = mock(AppConfig.class);
 		when(mockedConfig.getHashtag()).thenReturn(CURRENT_HASHTAG);
 
 		when(masterDataFacade.getAppConfiguration()).thenReturn(mockedConfig);

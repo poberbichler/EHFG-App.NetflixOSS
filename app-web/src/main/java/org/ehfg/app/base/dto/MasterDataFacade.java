@@ -1,5 +1,7 @@
 package org.ehfg.app.base.dto;
 
+import org.ehfg.app.base.AppConfig;
+
 import java.util.Collection;
 import java.util.List;
 
@@ -8,17 +10,18 @@ import java.util.List;
  * @since 03.2014
  */
 public interface MasterDataFacade {
-	ConfigurationDTO getAppConfiguration();
-	ConfigurationDTO saveAppConfiguration(ConfigurationDTO config);
+	AppConfig getAppConfiguration();
+	AppConfig saveAppConfiguration(AppConfig config);
+
 	List<PointOfInterestDTO> findAllPointsOfInterest();
 	List<PointOfInterestDTO> savePointOfInterest(PointOfInterestDTO source);
 	void removePoint(String id);
-	List<LocationDTO> findAllLocation();
 
 	Collection<MapCategoryDTO> findAllMapCategories();
 	void saveMapCategory(MapCategoryDTO categoryDTO);
 	void deleteMapCategory(String id);
-	
+
+	List<LocationDTO> findAllLocation();
 	String saveLocation(LocationDTO newLocation);
 	void deleteLocation(String locationId);
 }

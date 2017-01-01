@@ -1,12 +1,15 @@
 package org.ehfg.app.base;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
+import com.google.common.base.MoreObjects;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+
 /**
  * final class for the general configuration of the app
- * 
+ *
  * @author patrick
  * @since 06.2015
  */
@@ -17,9 +20,13 @@ public class AppConfig {
 	@Id
 	private final String id = CONFIG_ID;
 
+	@NotNull
 	private String hashtag;
+
+	@Min(1)
+	@NotNull
 	private Integer numberOfTweets;
-	
+
 	private String backdoorScript;
 
 	/**
@@ -39,9 +46,7 @@ public class AppConfig {
 	public void setAndFixHashtag(String hashtag) {
 		if (hashtag.startsWith("#")) {
 			this.hashtag = hashtag;
-		}
-
-		else {
+		} else {
 			this.hashtag = "#".concat(hashtag);
 		}
 	}
@@ -65,16 +70,20 @@ public class AppConfig {
 	public void setNumberOfTweets(Integer numberOfTweets) {
 		this.numberOfTweets = numberOfTweets;
 	}
-	
+
 	public String getBackdoorScript() {
 		return backdoorScript;
 	}
+
 	public void setBackdoorScript(String backdoorScript) {
 		this.backdoorScript = backdoorScript;
 	}
 
 	@Override
 	public String toString() {
-		return ToStringBuilder.reflectionToString(this);
+		return MoreObjects.toStringHelper(this)
+				.add("hashtag", hashtag)
+				.add("numberOfTweets", numberOfTweets)
+				.toString();
 	}
 }

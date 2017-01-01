@@ -1,6 +1,6 @@
 package org.ehfg.app.mvc.maintenance;
 
-import org.ehfg.app.base.dto.ConfigurationDTO;
+import org.ehfg.app.base.AppConfig;
 import org.ehfg.app.base.dto.MasterDataFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -32,15 +32,15 @@ public class GeneralMaintenanceController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public ModelAndView handleSubmittedForm(@Valid @ModelAttribute("config") ConfigurationDTO configurationDTO, BindingResult bindingResult) {
+	public ModelAndView handleSubmittedForm(@Valid @ModelAttribute("config") AppConfig config, BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
-			return createGeneralView(configurationDTO);
+			return createGeneralView(config);
 		}
 
-		return createGeneralView(masterDataFacade.saveAppConfiguration(configurationDTO));
+		return createGeneralView(masterDataFacade.saveAppConfiguration(config));
 	}
 
-	private ModelAndView createGeneralView(final ConfigurationDTO config) {
+	private ModelAndView createGeneralView(AppConfig config) {
 		ModelAndView view = new ModelAndView("generalMaintenance");
 		view.addObject("activePage", "generalMaintenance");
 		view.addObject("config", config);
