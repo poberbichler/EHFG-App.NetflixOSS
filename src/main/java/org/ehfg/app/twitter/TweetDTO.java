@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.common.base.MoreObjects;
-import org.ehfg.app.program.NumberTimestampLocalDateTimeDeserializer;
+import org.ehfg.app.converter.NumberTimestampLocalDateTimeDeserializer;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
