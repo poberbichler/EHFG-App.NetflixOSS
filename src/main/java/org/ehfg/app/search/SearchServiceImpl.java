@@ -45,8 +45,6 @@ class SearchServiceImpl implements SearchService {
 			CompletableFuture<SearchResult> twitter = completedFuture(input).thenApplyAsync(this::searchTwitter);
 			CompletableFuture<Map<ResultType, List<SearchResultItem>>> program = completedFuture(input).thenApplyAsync(this::searchProgram);
 
-			Map<ResultType, List<SearchResultItem>> resultTypeListMap = program.get();
-
 			return twitter.thenCombineAsync(program, this::combine).get(5, TimeUnit.SECONDS);
 		} catch (InterruptedException | ExecutionException | TimeoutException e) {
 			logger.error("an exception occured when searching for [{}]", input, e);
