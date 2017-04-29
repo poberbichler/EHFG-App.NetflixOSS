@@ -42,8 +42,9 @@ class SearchServiceImpl implements SearchService {
 		try {
 			logger.info("searching for [{}], calling the endpoint", input);
 
-			CompletableFuture<SearchResult> twitter = completedFuture(input).thenApplyAsync(this::searchTwitter);
-			CompletableFuture<Map<ResultType, List<SearchResultItem>>> program = completedFuture(input).thenApplyAsync(this::searchProgram);
+			CompletableFuture<String> inputFuture = completedFuture(input);
+			CompletableFuture<SearchResult> twitter = inputFuture.thenApplyAsync(this::searchTwitter);
+			CompletableFuture<Map<ResultType, List<SearchResultItem>>> program = inputFuture.thenApplyAsync(this::searchProgram);
 
 			return twitter.thenCombineAsync(program, this::combine).get(5, TimeUnit.SECONDS);
 		} catch (InterruptedException | ExecutionException | TimeoutException e) {
@@ -76,7 +77,7 @@ class SearchServiceImpl implements SearchService {
 		logger.info("updating indexes...");
 
 		runAsync(this::updateProgramIndex)
-				.runAfterBothAsync(runAsync(this::updateProgramIndex), () -> logger.info("updated both search indexes"))
+				.runAfterBothAsync(runAsync(this::updateTwitterIndex), () -> logger.info("updated both search indexes"))
 				.exceptionally(ex -> {
 					logger.info("an error occured while updating indexes", ex);
 					return null;
@@ -89,17 +90,5 @@ class SearchServiceImpl implements SearchService {
 
 	private void updateProgramIndex() {
 		restTemplate.postForLocation(TWITTER_URL + "/search/", null);
-	}
-
-	public static class SearchResponse {
-		private Map<ResultType, List<SearchResultItem>> data;
-
-		public Map<ResultType, List<SearchResultItem>> getData() {
-			return data;
-		}
-
-		public void setData(Map<ResultType, List<SearchResultItem>> data) {
-			this.data = data;
-		}
 	}
 }
