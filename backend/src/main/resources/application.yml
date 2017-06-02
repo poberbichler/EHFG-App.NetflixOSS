@@ -1,0 +1,49 @@
+maintenance:
+  user: patrick
+  password: 123
+
+
+server.port: 8080
+
+eureka:
+  dashboard.path: eureka-dashboard
+  instance:
+    hostname: localhost
+  client:
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+  server:
+    wait-time-in-ms-when-sync-empty: 30
+
+spring.thymeleaf:
+  cache: false
+  excludedViewNames: tweetExport
+
+# use this setting so the eureka dashboard will work with windows machine
+spring.freemarker.prefer-file-system-access: false
+
+zuul:
+  prefix: /rest
+  routes:
+    session-service:
+      serviceId: ehfgapp-program
+      strip-prefix: true
+      path: /sessions/**
+      servicePath: /program
+
+    speakers:
+      serviceId: ehfgapp-program
+      strip-prefix: false
+
+    program:
+      serviceId: ehfgapp-program
+      strip-prefix: false
+
+    twitter:
+      serviceId: ehfgapp-twitter
+      strip-prefix: true
+      servicePath: /tweets
+
+    internal:
+      path: /**
+      url: forward:/api

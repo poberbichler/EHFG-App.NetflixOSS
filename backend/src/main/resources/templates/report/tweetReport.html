@@ -1,0 +1,54 @@
+<html layout:decorator="report/reportTemplate">
+<div layout:fragment="content">
+    <h3 th:text="'Tweets for ' + ${currentHashtag}">Tweets for #EHFG2014</h3>
+
+    <nav th:with="numberOfPages=2">
+        <ul class="pagination" th:with="
+            firstPageNumber=${T(java.lang.Math).max(__${numberOfPages}__, (tweetPage.currentPage - __${numberOfPages}__))},
+            lastPageNumber=${T(java.lang.Math).min(tweetPage.currentPage + __${numberOfPages}__, tweetPage.maxPages - __${numberOfPages}__ - 1)}">
+
+            <li th:each="line : ${#numbers.sequence(0, numberOfPages - 1)}" th:class="${line == tweetPage.currentPage ? 'active' : ''}">
+                <a th:href="${line}" th:text="${line + 1}">line</a>
+            </li>
+
+            <li th:if="${tweetPage.currentPage gt 2*numberOfPages}">
+                <a>...</a>
+            </li>
+
+            <li th:each="line : ${#numbers.sequence(firstPageNumber, lastPageNumber)}" th:class="${line == tweetPage.currentPage ? 'active' : ''}">
+                <a th:href="${line}" th:text="${line + 1}">line</a>
+            </li>
+
+            <li th:if="${tweetPage.currentPage lt (tweetPage.maxPages - 2*numberOfPages - 1)}">
+                <a href="#">...</a>
+            </li>
+
+            <li th:each="line : ${#numbers.sequence(tweetPage.maxPages - numberOfPages, tweetPage.maxPages - 1)}" th:class="${line == tweetPage.currentPage ? 'active' : ''}">
+                <a th:href="${line}" th:text="${line + 1}">line</a>
+            </li>
+        </ul>
+    </nav>
+
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>Image</th>
+                <th>Full Name</th>
+                <th>User Name</th>
+                <th>Timestamp</th>
+                <th>Message</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr th:each="tweet : ${tweetPage.data}">
+                <td><img th:src="${tweet.profileImage}" style="height: 40px; width: 40px;" /></td>
+                <td th:text="${tweet.fullName}">fullname</td>
+                <td th:text="${tweet.nickName}">username</td>
+                <td th:text="${tweet.timestamp}">timestamp</td>
+                <td th:text="${tweet.message}">message</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+</html>
