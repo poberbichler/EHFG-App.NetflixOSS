@@ -1,0 +1,9 @@
+spring.jackson:
+  date-format: yyyy-MM-dd
+
+rss:
+  base.url: http://www.ehfg.org/feed/
+  sufix: 2016.rss
+
+eureka.client.enabled: false
+spring.data.mongodb.repositories.enabled: false
